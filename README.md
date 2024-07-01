@@ -4,7 +4,7 @@
 
 </h2>
 
-This is a simple, loveable, and complete SQLMesh demo project with the goal of running multiple, realistic scenarios very fast. 
+This is a simple, loveable, and complete Tobiko Cloud demo project with the goal of running multiple, realistic scenarios very fast. 
 
 This repo is going to try something a bit novel compared to your standard demo projects. I'll take you through different stories that illustrate the data engineering workflow. It'll engage your inner dialogue along with look and feel of the development experience. The hope is for you to better internalize and translate these stories to your own reality. Don't worry, these stories won't be too long-winded!
 
@@ -15,7 +15,7 @@ This is intentionally similar to what people may have experienced when I created
 
 What you'll be using:
 
-- Tobiko Cloud: state backend and observability (uses postgres)
+- Tobiko Cloud: state backend (uses postgres) and observability
 - SQLMesh: transformation framework
 - SQLGlot: Python macros that compile to SQL
 - pytest: test Python macros
