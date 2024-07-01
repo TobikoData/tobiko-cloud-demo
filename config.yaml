@@ -1,0 +1,43 @@
+gateways:
+    tobiko_cloud:
+        connection:
+            type: bigquery
+            method: service-account-json
+            concurrent_tasks: 5
+            register_comments: true
+            keyfile_json: {{ env_var('GOOGLE_SQLMESH_CREDENTIALS') }}
+            project: sqlmesh-public-demo
+        state_connection:
+            type: cloud
+            url: https://sqlmesh-prod-enterprise-public-demo-sefz6ezt4q-uc.a.run.app
+            token: "{{ env_var('TOBIKO_CLOUD_TOKEN') }}"
+
+default_gateway: tobiko_cloud
+
+model_defaults:
+    dialect: bigquery
+
+# enables synchronized deployments to prod when a PR is merged
+cicd_bot:
+    type: github
+    merge_method: squash
+    enable_deploy_command: true
+    auto_categorize_changes:
+      external: full
+      python: full
+      sql: full
+      seed: full
+
+plan:
+  enable_preview: true
+
+# list of users that are allowed to approve PRs for synchronized deployments
+users:
+- username: sung_sqlmesh_demo
+  github_username: sungchun12
+  roles:
+    - required_approver
+- username: afzal_sqlmesh_demo
+  github_username: afzaljasani
+  roles:
+    - required_approver
