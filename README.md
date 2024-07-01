@@ -54,7 +54,7 @@ export TOBIKO_CLOUD_TOKEN=<TOBIKO_CLOUD_TOKEN>
 ```
 
 ```yaml
-# gateway example
+# config.yaml gateway example
 gateways:
     tobiko_cloud:
         connection:
