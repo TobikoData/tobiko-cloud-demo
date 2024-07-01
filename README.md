@@ -27,12 +27,9 @@ What you'll be using:
 **Setup your virtual environment for SQLMesh:**
 
 ```bash
-git clone https://github.com/TobikoData/sqlmesh-demos.git # clone the repo
-cd sqlmesh-demos # go to the root directory
-python -m venv venv # create virtual environment
-source venv/bin/activate # activate it
-pip install -r requirements.txt # install dependencies
-source venv/bin/activate # reactivate virtual environment
+git clone https://github.com/TobikoData/tobiko-cloud-demo.git # clone the repo
+cd tobiko-cloud-demo # go to the root directory
+make dev-install # virtual environment setup
 ```
 
 **Setup your BigQuery Service Account:**
