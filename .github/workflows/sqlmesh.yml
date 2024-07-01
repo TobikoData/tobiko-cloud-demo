@@ -42,13 +42,13 @@ jobs:
         with:
           ref: refs/pull/${{ github.event.issue.pull_request && github.event.issue.number || github.event.pull_request.number  }}/merge
       - name: Install SQLMesh + Dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install poetry keyring keyrings-google-artifactregistry-auth
+          poetry install --no-root
         shell: bash
       - name: Run CI/CD Bot
         run: |
           sqlmesh_cicd -p ${{ github.workspace }} github --token ${{ secrets.GITHUB_TOKEN }} run-all
-        env: # TODO: update your GitHub secrets to include SQLMESH_STATE_HOST, SQLMESH_STATE_USERNAME, SQLMESH_STATE_PASSWORD
-          SQLMESH_STATE_HOST: ${{ secrets.SQLMESH_STATE_HOST }}
-          SQLMESH_STATE_USERNAME: ${{ secrets.SQLMESH_STATE_USERNAME }}
-          SQLMESH_STATE_PASSWORD: ${{ secrets.SQLMESH_STATE_PASSWORD }}
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        env: # TODO: update your GitHub secrets to include TOBIKO_CLOUD_TOKEN, GOOGLE_SQLMESH_CREDENTIALS
+          TOBIKO_CLOUD_TOKEN: ${{ secrets.TOBIKO_CLOUD_TOKEN }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}
