@@ -1,6 +1,6 @@
 <h2 align="center">
 
-![](sqlmesh_logo.png) Demos
+![](images/logo-tobiko-cloud.svg)
 
 </h2>
 
@@ -15,12 +15,12 @@ This is intentionally similar to what people may have experienced when I created
 
 What you'll be using:
 
+- Tobiko Cloud: state backend and observability (uses postgres)
 - SQLMesh: transformation framework
-- BigQuery: data warehouse to run transforms against
-- DuckDB: local development testing
-- Postgres: Store SQLMesh metadata
 - SQLGlot: Python macros that compile to SQL
 - pytest: test Python macros
+- BigQuery: data warehouse to run transforms against
+- DuckDB: local development testing
 
 <details>
 
@@ -45,24 +45,35 @@ source venv/bin/activate # reactivate virtual environment
 4. Copy the contents of the service account file to your clipboard
 5. Export the credentials as an environment variable in your terminal: 
 
-`export GOOGLE_CREDENTIALS=<your-service-account-key-contents>`
+`export GOOGLE_SQLMESH_CREDENTIALS=<your-service-account-key-contents>`
 
-**Setup your Postgres Database:**
+**Setup your Tobiko Cloud State Connection:**
 
-1. Sign up for a free Neon account: [here](https://neon.tech/)
-2. Create a new database named: `sqlmesh_state_demo`
-![new_database](./images/new_database.png)
-3. Export your environment variables based on the newly created database connection string
-![new_database](./images/connection_string.png)
+1. Work with Tobiko to get your Tobiko Cloud Token and account url
 
 ```bash
 # examples based on the image above
-export SQLMESH_STATE_HOST=ep-purple-heart-a6mqlep8.us-west-2.aws.neon.tech
-export SQLMESH_STATE_USERNAME=<your-neon-username>
-export SQLMESH_STATE_PASSWORD=<your-password-blurred-in-the-image>
+export TOBIKO_CLOUD_TOKEN=<TOBIKO_CLOUD_TOKEN>
 ```
 
-**Verify SQLMesh can connect to BigQuery and Postgres:**
+```yaml
+# gateway example
+gateways:
+    tobiko_cloud:
+        connection:
+            type: bigquery
+            method: service-account-json
+            concurrent_tasks: 5
+            register_comments: true
+            keyfile_json: {{ env_var('GOOGLE_SQLMESH_CREDENTIALS') }}
+            project: sqlmesh-public-demo # TODO: update this
+        state_connection:
+            type: cloud
+            url: https://sqlmesh-prod-enterprise-public-demo-sefz6ezt4q-uc.a.run.app # TODO: replace this url with your own
+            token: "{{ env_var('TOBIKO_CLOUD_TOKEN') }}"
+```
+
+**Verify SQLMesh can connect to BigQuery and Tobiko Cloud:**
 
 ```bash
 sqlmesh info # print info about a SQLMesh project
@@ -81,7 +92,7 @@ Test connection succeeded
 
 How do I run SQLMesh as fast as possible and get the general look and feel?
 
-Run this command and watch the demo video!
+Run this command!
 
 ```bash
 sqlmesh plan # follow the instructions in the CLI prompt
