@@ -53,7 +53,7 @@ jobs:
       - name: Install SQLMesh Enterprise + Dependencies
         run: |
           pip install poetry keyring keyrings-google-artifactregistry-auth
-          pip install "sqlmesh-enterprise[bigquery,web,services]" --extra-index-url ${{ secrets.SQLMESH_ENTERPRISE_TOKEN }}
+          pip install "sqlmesh-enterprise[bigquery,web,services,github]==0.27.0" --extra-index-url ${{ secrets.SQLMESH_ENTERPRISE_TOKEN }}
         shell: bash
 
       - name: Run CI/CD Bot
