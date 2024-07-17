@@ -23,7 +23,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   sqlmesh:
-    name: SQLMesh Actions Workflow
+    name: SQLMesh Actions
     runs-on: ubuntu-latest
     permissions:
       # Required to access code in PR
@@ -50,10 +50,10 @@ jobs:
         with:
           credentials_json: '${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}'
 
-      - name: Install SQLMesh + Dependencies
+      - name: Install SQLMesh Enterprise + Dependencies
         run: |
           pip install poetry keyring keyrings-google-artifactregistry-auth
-          poetry install --no-root
+          pip install "sqlmesh-enterprise[bigquery,web,services]" --extra-index-url ${{ secrets.SQLMESH_ENTERPRISE_TOKEN }}
         shell: bash
 
       - name: Run CI/CD Bot
