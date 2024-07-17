@@ -61,5 +61,5 @@ jobs:
         run: |
           sqlmesh_cicd -p ${{ github.workspace }} github --token ${{ secrets.GITHUB_TOKEN }} run-all
         env: # TODO: update your GitHub secrets to include TOBIKO_CLOUD_TOKEN, GOOGLE_SQLMESH_CREDENTIALS
-          TOBIKO_CLOUD_TOKEN: ${{ secrets.TOBIKO_CLOUD_TOKEN }}
+          TOBIKO_CLOUD_TOKEN: "'${{ secrets.TOBIKO_CLOUD_TOKEN }}'"
           GOOGLE_SQLMESH_CREDENTIALS: ${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}
