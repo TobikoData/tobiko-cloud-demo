@@ -23,7 +23,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   sqlmesh:
-    name: SQLMesh Actions Workflow
+    name: SQLMesh Actions
     runs-on: ubuntu-latest
     permissions:
       # Required to access code in PR
@@ -50,15 +50,16 @@ jobs:
         with:
           credentials_json: '${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}'
 
-      - name: Install SQLMesh + Dependencies
+      - name: Install SQLMesh Enterprise + Dependencies
         run: |
           pip install poetry keyring keyrings-google-artifactregistry-auth
-          poetry install --no-root
+          pip install ruff==0.4.8 mypy==1.10.0 pytest==8.1.1
+          pip install "sqlmesh-enterprise[bigquery,web,services,github]==0.27.0" --extra-index-url ${{ secrets.SQLMESH_ENTERPRISE_TOKEN }}
         shell: bash
 
       - name: Run CI/CD Bot
         run: |
           sqlmesh_cicd -p ${{ github.workspace }} github --token ${{ secrets.GITHUB_TOKEN }} run-all
         env: # TODO: update your GitHub secrets to include TOBIKO_CLOUD_TOKEN, GOOGLE_SQLMESH_CREDENTIALS
-          TOBIKO_CLOUD_TOKEN: ${{ secrets.TOBIKO_CLOUD_TOKEN }}
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}
+          TOBIKO_CLOUD_TOKEN: '${{ secrets.TOBIKO_CLOUD_TOKEN }}'
+          GOOGLE_SQLMESH_CREDENTIALS: ${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}

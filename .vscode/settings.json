@@ -1,9 +1,8 @@
 {
+    "debug.inlineValues": "on",
     "python.testing.pytestArgs": [
-        "tests"
+        "macros"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true,
-    "debug.inlineValues": "on",
-    "editor.wordWrap": "on"
-} 
+    "python.testing.pytestEnabled": true
+}

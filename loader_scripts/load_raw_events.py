@@ -87,6 +87,6 @@ def append_to_bigquery_table(
 append_to_bigquery_table(
     table_name="tcloud_raw_data.raw_events",
     num_rows=20,
-    end_date="2024-07-01",
-    project_id="sqlmesh-public-demo",
+    end_date="2024-07-16",
+    project_id="sqlmesh-public-demo"
 )
