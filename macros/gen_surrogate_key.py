@@ -2,9 +2,14 @@
 
 from sqlglot import exp
 from sqlmesh import macro
+from pydantic import BaseModel, Field
+
+class SurrogateKeyInput(BaseModel):
+    field_list: list[str] = Field(..., min_items=2)
+
 
 @macro("gen_surrogate_key")
-def gen_surrogate_key(evaluator, field_list: list) -> exp.SHA2:
+def gen_surrogate_key(evaluator, field_list: list[str]) -> exp.SHA2:
     """
     Generates a surrogate key by concatenating provided fields,
     treating null values with a specific placeholder,
@@ -20,6 +25,9 @@ def gen_surrogate_key(evaluator, field_list: list) -> exp.SHA2:
     Returns: An expression (SQLGlot) representing the SQL for the generated surrogate key.
     """
 
+    # Validate input using Pydantic
+    SurrogateKeyInput(field_list=field_list)
+
     default_null_value = "_null_"
     separator = exp.Literal.string('-')
 
@@ -30,7 +38,7 @@ def gen_surrogate_key(evaluator, field_list: list) -> exp.SHA2:
         expressions.append(
             exp.Coalesce(
                 this=exp.cast(exp.Column(this=field), to=exp.DataType.build('STRING')),
-                expressions=exp.Literal.string(default_null_value)
+                expressions=[exp.Literal.string(default_null_value)]
             )
         )
 
