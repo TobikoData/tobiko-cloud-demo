@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 
 
 class SurrogateKeyInput(BaseModel):
-    field_list: list[str] = Field(..., min_items=2)
+    field_list: list[str] = Field(..., min_length=2)
 
 
 @macro("gen_surrogate_key")
