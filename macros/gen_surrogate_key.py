@@ -26,12 +26,19 @@ def gen_surrogate_key(evaluator, field_list: list) -> exp.SHA2:
     Returns: An expression (SQLGlot) representing the SQL for the generated surrogate key.
     """
 
+    if len(field_list) < 2:
+        raise ValueError("At least two fields are required to generate a surrogate key.")
+    
+    # Assuming columns are instances of a specific class, e.g., Column
+    if not all(isinstance(field, exp.Column) for field in field_list):
+        raise ValueError("All fields must be column objects.")
+
     default_null_value = "_null_"
 
     expressions = []
     for i, field in enumerate(field_list):
         coalesce_expression = exp.Coalesce(
-                this=exp.cast(expression=exp.Column(this=field), to='TEXT'),
+                this=exp.cast(expression=field, to='TEXT'),  # Adjusted to use the field directly
                 expressions=exp.Literal.string(default_null_value)
         )
         expressions.append(coalesce_expression)
