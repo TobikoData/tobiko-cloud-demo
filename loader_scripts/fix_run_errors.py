@@ -7,7 +7,9 @@ import json
 SERVICE_ACCOUNT_INFO = json.loads(os.environ["GOOGLE_SQLMESH_CREDENTIALS"])
 
 # Authenticate with BigQuery using environment variable
-credentials = service_account.Credentials.from_service_account_info(SERVICE_ACCOUNT_INFO)
+credentials = service_account.Credentials.from_service_account_info(
+    SERVICE_ACCOUNT_INFO
+)
 client = bigquery.Client(credentials=credentials, project="sqlmesh-public-demo")
 
 # Define the table

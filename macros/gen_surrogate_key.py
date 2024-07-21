@@ -2,11 +2,6 @@
 
 from sqlglot import exp
 from sqlmesh import macro
-from pydantic import BaseModel, Field
-
-
-class SurrogateKeyInput(BaseModel):
-    field_list: list[str] = Field(..., min_length=2)
 
 
 @macro("gen_surrogate_key")
@@ -22,13 +17,15 @@ def gen_surrogate_key(evaluator, field_list: list) -> exp.SHA2:
     Example:
     - gen_surrogate_key(["field1", "field2"])
     - In a SQL model: select @gen_surrogate_key([orders.order_id, orders.customer_id]) as surrogate_key from orders
-    
+
     Returns: An expression (SQLGlot) representing the SQL for the generated surrogate key.
     """
 
     if len(field_list) < 2:
-        raise ValueError("At least two fields are required to generate a surrogate key.")
-    
+        raise ValueError(
+            "At least two fields are required to generate a surrogate key."
+        )
+
     # Assuming columns are instances of a specific class, e.g., Column
     if not all(isinstance(field, exp.Column) for field in field_list):
         raise ValueError("All fields must be column objects.")
@@ -38,12 +35,14 @@ def gen_surrogate_key(evaluator, field_list: list) -> exp.SHA2:
     expressions = []
     for i, field in enumerate(field_list):
         coalesce_expression = exp.Coalesce(
-                this=exp.cast(expression=field, to='TEXT'),  # Adjusted to use the field directly
-                expressions=exp.Literal.string(default_null_value)
+            this=exp.cast(
+                expression=field, to="TEXT"
+            ),  # Adjusted to use the field directly
+            expressions=exp.Literal.string(default_null_value),
         )
         expressions.append(coalesce_expression)
         if i < len(field_list) - 1:  # Add separator except for the last element
-            expressions.append(exp.Literal.string('-'))
+            expressions.append(exp.Literal.string("-"))
 
     concat_exp = exp.Concat(expressions=expressions)
     hash_exp = exp.SHA2(this=concat_exp, length=exp.Literal.number(256))

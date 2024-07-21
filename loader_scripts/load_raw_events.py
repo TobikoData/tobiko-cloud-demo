@@ -1,4 +1,5 @@
-"""This is a public demo script to generate demo data """
+"""This is a public demo script to generate demo data"""
+
 import pandas as pd
 import uuid
 from datetime import datetime, timedelta
@@ -88,5 +89,5 @@ append_to_bigquery_table(
     table_name="tcloud_raw_data.raw_events",
     num_rows=20,
     end_date="2024-07-16",
-    project_id="sqlmesh-public-demo"
+    project_id="sqlmesh-public-demo",
 )
