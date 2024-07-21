@@ -1,0 +1,9 @@
+{
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "debug.inlineValues": "on",
+    "editor.wordWrap": "on"
+} 

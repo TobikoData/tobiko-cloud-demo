@@ -20,17 +20,19 @@ def gen_surrogate_key(evaluator, field_list: list) -> exp.SHA2:
     Returns: An expression (SQLGlot) representing the SQL for the generated surrogate key.
     """
 
-    default_null_value = "_sqlmesh_surrogate_key_null_default_"
+    default_null_value = "_null_"
+    separator = exp.Literal.string('-')
 
     expressions = []
-    for i, field in enumerate(field_list):
-        coalesce_expression = exp.Coalesce(
-                this=exp.cast(expression=exp.Column(this=field), to='TEXT'),
+    for field in field_list:
+        if expressions:  # Add separator only between fields
+            expressions.append(separator)
+        expressions.append(
+            exp.Coalesce(
+                this=exp.cast(exp.Column(this=field), to=exp.DataType.build('STRING')),
                 expressions=exp.Literal.string(default_null_value)
+            )
         )
-        expressions.append(coalesce_expression)
-        if i < len(field_list) - 1:  # Add separator except for the last element
-            expressions.append(exp.Literal.string('-'))
 
     concat_exp = exp.Concat(expressions=expressions)
     hash_exp = exp.SHA2(this=concat_exp, length=exp.Literal.number(256))
