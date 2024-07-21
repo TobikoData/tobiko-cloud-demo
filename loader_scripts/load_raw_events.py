@@ -14,8 +14,9 @@ SERVICE_ACCOUNT_INFO = json.loads(os.environ["GOOGLE_SQLMESH_CREDENTIALS"])
 # Define the list of possible event names
 event_names = ["page_view", "product_view", "ad_view", "video_view", "blog_view"]
 
+
 def generate_fake_data(num_rows: int, end_date: str):
-    end_date_parsed = datetime.strptime(end_date, '%Y-%m-%d')
+    end_date_parsed = datetime.strptime(end_date, "%Y-%m-%d")
     data = []
     for i in range(num_rows):
         event_id = str(uuid.uuid4())
@@ -26,10 +27,11 @@ def generate_fake_data(num_rows: int, end_date: str):
             "event_id": event_id,
             "event_name": event_name,
             "event_timestamp": event_timestamp,
-            "user_id": user_id
+            "user_id": user_id,
         }
         data.append(row)
     return data
+
 
 def create_table_if_not_exists(client, dataset_name: str, table_name: str):
     dataset_ref = client.dataset(dataset_name)
@@ -49,14 +51,19 @@ def create_table_if_not_exists(client, dataset_name: str, table_name: str):
         table = client.create_table(table)
         print(f"Created table {table.table_id}")
 
-def append_to_bigquery_table(table_name: str, num_rows: int, end_date: str, project_id: str):
+
+def append_to_bigquery_table(
+    table_name: str, num_rows: int, end_date: str, project_id: str
+):
     # Authenticate with BigQuery using environment variable
     service_account_info = SERVICE_ACCOUNT_INFO
-    credentials = service_account.Credentials.from_service_account_info(service_account_info)
+    credentials = service_account.Credentials.from_service_account_info(
+        service_account_info
+    )
     client = bigquery.Client(credentials=credentials, project=project_id)
 
     # Parse table name
-    dataset_name, table_name = table_name.split('.')
+    dataset_name, table_name = table_name.split(".")
 
     # Generate fake data
     fake_data = generate_fake_data(num_rows, end_date)
@@ -71,12 +78,15 @@ def append_to_bigquery_table(table_name: str, num_rows: int, end_date: str, proj
     job = client.load_table_from_dataframe(df, f"{dataset_name}.{table_name}")
     job.result()  # Wait for the job to complete
 
-    print(f"{num_rows} rows of raw events demo data with date [{end_date}] appended to {dataset_name}.{table_name}")
+    print(
+        f"{num_rows} rows of raw events demo data with date [{end_date}] appended to {dataset_name}.{table_name}"
+    )
+
 
 # Example usage
 append_to_bigquery_table(
     table_name="tcloud_raw_data.raw_events",
     num_rows=20,
     end_date="2024-07-01",
-    project_id="sqlmesh-public-demo"
+    project_id="sqlmesh-public-demo",
 )
