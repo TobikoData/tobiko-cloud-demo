@@ -8,26 +8,16 @@ from config import get_service_account_info
 app = typer.Typer()
 
 @app.command()
-def hello(name: str):
-    print(f"Hello {name}")
-
-
-@app.command()
-def goodbye(name: str, formal: bool = False):
-    if formal:
-        print(f"Goodbye Ms. {name}. Have a good day.")
-    else:
-        print(f"Bye {name}!")
-
-
-@app.command()
 def rename_column(
-    project_name: str = "sqlmesh-public-demo",
-    dataset_name: str = "tcloud_raw_data",
-    table_name: str = "raw_events",
-    column_to_rename: str = "named_events",
-    new_column_name: str = "event_name",
+    project_name: str = typer.Option("sqlmesh-public-demo", help="The Google Cloud project name."),
+    dataset_name: str = typer.Option("tcloud_raw_data", help="The BigQuery dataset name."),
+    table_name: str = typer.Option("raw_events", help="The BigQuery table name."),
+    column_to_rename: str = typer.Option("named_events", help="The name of the column to be renamed."),
+    new_column_name: str = typer.Option("event_name", help="The new name for the column."),
 ):
+    """
+    Rename a column in a BigQuery table to create an error OR fix for a raw table
+    """
     # Get the service account info securely
     service_account_info = get_service_account_info()
     
@@ -47,11 +37,14 @@ def rename_column(
 
 @app.command()
 def append_rawdata(
-    table_name: str = "tcloud_raw_data.raw_events",
-    num_rows: int = 20,
-    end_date: str = typer.Option(datetime.today().strftime('%Y-%m-%d'), help="End date in YYYY-MM-DD format"),
-    project_id: str = "sqlmesh-public-demo",
+    table_name: str = typer.Option("tcloud_raw_data.raw_events", help="The fully qualified BigQuery table name (dataset.table)."),
+    num_rows: int = typer.Option(20, help="The number of rows to append."),
+    end_date: str = typer.Option(datetime.today().strftime('%Y-%m-%d'), help="End date in YYYY-MM-DD format. Defaults to today's date."),
+    project_id: str = typer.Option("sqlmesh-public-demo", help="The Google Cloud project ID."),
 ):
+    """
+    Append raw data to a BigQuery table intended to impact the incremental_events.sql model
+    """
     service_account_info = get_service_account_info()
     credentials = service_account.Credentials.from_service_account_info(service_account_info)
     
