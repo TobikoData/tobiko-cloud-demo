@@ -1,6 +1,8 @@
 import typer
 from google.oauth2 import service_account
 from rename_column_util import rename_column_util
+from load_raw_events import RawEventLoader
+from datetime import datetime
 from config import get_service_account_info
 
 app = typer.Typer()
@@ -41,6 +43,20 @@ def rename_column(
         column_to_rename=column_to_rename,
         new_column_name=new_column_name,
     )
+
+
+@app.command()
+def append_rawdata(
+    table_name: str = "tcloud_raw_data.raw_events",
+    num_rows: int = 20,
+    end_date: str = typer.Option(datetime.today().strftime('%Y-%m-%d'), help="End date in YYYY-MM-DD format"),
+    project_id: str = "sqlmesh-public-demo",
+):
+    service_account_info = get_service_account_info()
+    credentials = service_account.Credentials.from_service_account_info(service_account_info)
+    
+    loader = RawEventLoader(credentials, project_id)
+    loader.append_to_bigquery_table(table_name, num_rows, end_date)
 
 
 if __name__ == "__main__":
