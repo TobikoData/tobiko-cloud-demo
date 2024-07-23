@@ -12,8 +12,8 @@ def rename_column(
     project_name: str = typer.Option("sqlmesh-public-demo", help="The Google Cloud project name."),
     dataset_name: str = typer.Option("tcloud_raw_data", help="The BigQuery dataset name."),
     table_name: str = typer.Option("raw_events", help="The BigQuery table name."),
-    column_to_rename: str = typer.Option("named_events", help="The name of the column to be renamed."),
-    new_column_name: str = typer.Option("event_name", help="The new name for the column."),
+    old: str = typer.Option("named_events", help="The name of the column to be renamed."),
+    new: str = typer.Option("event_name", help="The new name for the column."),
 ):
     """
     Rename a column in a BigQuery table to create an error OR fix for a raw table
@@ -30,8 +30,8 @@ def rename_column(
         project_name=project_name,
         dataset_name=dataset_name,
         table_name=table_name,
-        column_to_rename=column_to_rename,
-        new_column_name=new_column_name,
+        column_to_rename=old,
+        new_column_name=new,
     )
 
 
