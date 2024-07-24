@@ -1,9 +1,9 @@
 import typer
 from google.oauth2 import service_account
-from rename_column_util import rename_column_util
-from load_raw_events import RawEventLoader
+from demo_scripts.rename_column_util import rename_column_util
+from demo_scripts.load_raw_events import RawEventLoader
 from datetime import datetime
-from config import get_service_account_info
+from demo_scripts.config import get_service_account_info
 
 app = typer.Typer()
 
