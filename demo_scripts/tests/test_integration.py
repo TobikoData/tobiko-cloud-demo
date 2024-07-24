@@ -15,9 +15,9 @@ def mock_credentials():
 def runner():
     return CliRunner()
 
-@patch('demo_scripts.get_service_account_info')
-@patch('demo_scripts.service_account.Credentials.from_service_account_info')
-@patch('demo_scripts.load_raw_events.bigquery.Client')
+@patch('demo_scripts.main.get_service_account_info')
+@patch('google.oauth2.service_account.Credentials.from_service_account_info')
+@patch('google.cloud.bigquery.Client')
 def test_integration_append_and_rename(mock_bq_client, mock_credentials, mock_get_sa_info, runner, mock_bigquery_client):
     mock_get_sa_info.return_value = {}
     mock_credentials.return_value = MagicMock()
@@ -36,9 +36,9 @@ def test_integration_append_and_rename(mock_bq_client, mock_credentials, mock_ge
     # Check if the table was retrieved twice (before and after renaming)
     assert mock_bigquery_client.get_table.call_count == 2
 
-@patch('demo_scripts.get_service_account_info')
-@patch('demo_scripts.service_account.Credentials.from_service_account_info')
-@patch('demo_scripts.load_raw_events.bigquery.Client')
+@patch('demo_scripts.main.get_service_account_info')
+@patch('google.oauth2.service_account.Credentials.from_service_account_info')
+@patch('google.cloud.bigquery.Client')
 def test_integration_error_handling(mock_bq_client, mock_credentials, mock_get_sa_info, runner, mock_bigquery_client):
     mock_get_sa_info.return_value = {}
     mock_credentials.return_value = MagicMock()
