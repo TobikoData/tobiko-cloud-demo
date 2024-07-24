@@ -1,5 +1,6 @@
 from google.cloud import bigquery
 from google.oauth2 import service_account
+import typer
 
 def rename_column_util(
     credentials,
@@ -20,8 +21,8 @@ def rename_column_util(
     original_schema = "\n".join(
         f"  {field.name}: {field.field_type}" for field in table.schema
     )
-    print("\nOriginal Schema:")
-    print(original_schema)
+    typer.echo("\nOriginal Schema:")
+    typer.echo(original_schema)
 
     # SQL to rename the column
     sql = f"ALTER TABLE `{table_id}` RENAME COLUMN {column_to_rename} TO {new_column_name};"
@@ -31,8 +32,10 @@ def rename_column_util(
         job = client.query(sql)
         job.result()  # Wait for the job to complete
 
-        print(
-            f"\nColumn '{column_to_rename}' has been renamed to '{new_column_name}' in table {table_id}"
+        typer.echo(
+            f"\nColumn '{typer.style(column_to_rename, fg=typer.colors.RED)}' "
+            f"has been renamed to '{typer.style(new_column_name, fg=typer.colors.GREEN)}' "
+            f"in table {table_id}"
         )
 
         # Verify the change
@@ -40,8 +43,8 @@ def rename_column_util(
         updated_schema = "\n".join(
             f"  {field.name}: {field.field_type}" for field in table.schema
         )
-        print("\nUpdated Schema:")
-        print(updated_schema)
+        typer.echo("\nUpdated Schema:")
+        typer.echo(updated_schema)
     except Exception as e:
         if "Column already exists" in str(e):
             print(f"\nError: {e}")
