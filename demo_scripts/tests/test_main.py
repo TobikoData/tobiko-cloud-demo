@@ -25,7 +25,7 @@ def mock_raw_event_loader():
 
 def test_rename_column(mock_credentials, mock_rename_column_util):
     with patch("demo_scripts.main.get_service_account_info", return_value={}), patch(
-        "google.oauth2.service_account.Credentials.from_service_account_info",
+        "demo_scripts.main.service_account.Credentials.from_service_account_info",
         return_value=mock_credentials,
     ):
         result = runner.invoke(
@@ -37,7 +37,7 @@ def test_rename_column(mock_credentials, mock_rename_column_util):
 
 def test_append_rawdata(mock_credentials, mock_raw_event_loader):
     with patch("demo_scripts.main.get_service_account_info", return_value={}), patch(
-        "google.oauth2.service_account.Credentials.from_service_account_info",
+        "demo_scripts.main.service_account.Credentials.from_service_account_info",
         return_value=mock_credentials,
     ):
         result = runner.invoke(app, ["append-rawdata", "--num-rows", "10"])

@@ -1,9 +1,24 @@
+"""
+This CLI tool is designed to interact with Google BigQuery
+to manage and manipulate raw event data for live demos.
+It provides commands to append generated fake data to a specified BigQuery table
+and to rename columns in an existing BigQuery table.
+The tool uses service account credentials saved in an environment variable for authentication with Google Cloud services.
+"""
+
+import sys
+from pathlib import Path
+
+# Add the project root to the Python path
+project_root = str(Path(__file__).resolve().parent.parent)
+sys.path.insert(0, project_root)
+
 import typer
 from google.oauth2 import service_account
-from rename_column_util import rename_column_util
-from load_raw_events import RawEventLoader
+from demo_scripts.rename_column_util import rename_column_util
+from demo_scripts.load_raw_events import RawEventLoader
 from datetime import datetime
-from config import get_service_account_info
+from demo_scripts.config import get_service_account_info
 
 app = typer.Typer()
 
