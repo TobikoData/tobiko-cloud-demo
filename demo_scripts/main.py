@@ -65,7 +65,7 @@ def append_rawdata(
         "tcloud_raw_data.raw_events",
         help="The fully qualified BigQuery table name (dataset.table).",
     ),
-    num_rows: int = typer.Option(20, help="The number of rows to append."),
+    num_rows: int = typer.Option(20, help="The number of rows to append.", min=1),
     end_date: str = typer.Option(
         datetime.today().strftime("%Y-%m-%d"),
         help="End date in YYYY-MM-DD format. Defaults to today's date.",

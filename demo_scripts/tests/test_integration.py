@@ -88,3 +88,14 @@ def test_integration_error_handling(
         app, ["rename-column", "--old", "event_name", "--new", "renamed_event"]
     )
     assert result.exit_code != 0
+
+@patch("demo_scripts.main.get_service_account_info")
+@patch("google.oauth2.service_account.Credentials.from_service_account_info")
+@patch("google.cloud.bigquery.Client")
+def test_integration_authentication_error(
+    mock_bq_client, mock_credentials, mock_get_sa_info, runner, mock_bigquery_client
+):
+    mock_get_sa_info.side_effect = KeyError("GOOGLE_SQLMESH_CREDENTIALS not set")
+
+    result = runner.invoke(app, ["append-rawdata", "--num-rows", "10"])
+    assert result.exit_code != 0
