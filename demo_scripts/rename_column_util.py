@@ -2,6 +2,7 @@ from google.cloud import bigquery
 from google.oauth2 import service_account
 import typer
 
+
 def rename_column_util(
     credentials,
     project_name: str,

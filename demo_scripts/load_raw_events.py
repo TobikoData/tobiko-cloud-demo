@@ -9,6 +9,7 @@ from google.cloud import bigquery
 # Define the list of possible event names
 event_names = ["page_view", "product_view", "ad_view", "video_view", "blog_view"]
 
+
 class RawEventLoader:
     def __init__(self, credentials, project_id):
         self.client = bigquery.Client(credentials=credentials, project=project_id)

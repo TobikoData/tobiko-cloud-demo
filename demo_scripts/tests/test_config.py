@@ -3,6 +3,7 @@ import json
 import pytest
 from demo_scripts.config import get_service_account_info
 
+
 def test_get_service_account_info():
     # Mock the environment variable
     mock_credentials = {
@@ -23,6 +24,7 @@ def test_get_service_account_info():
     assert isinstance(result, dict)
     assert "type" in result
     assert result["type"] == "service_account"
+
 
 def test_get_service_account_info_missing_env_var():
     # Remove the environment variable if it exists
