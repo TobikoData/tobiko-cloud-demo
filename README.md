@@ -87,15 +87,76 @@ Test connection succeeded
 
 ## Story #1
 
-How do I run SQLMesh as fast as possible and get the general look and feel?
+Run a SQLMesh error simulation for raw data schema evolution.
 
-Run this command!
+<details>
 
-```bash
-sqlmesh plan # follow the instructions in the CLI prompt
+```python
+# run all these from the root directory
+
+# rename a raw table column, the table should already exist
+python demo_scripts/main.py rename-column --old event_name --new named_events
+
+# expected output
+# Original Schema:
+#   event_id: STRING
+#   event_name: STRING
+#   event_timestamp: TIMESTAMP
+#   user_id: STRING
+
+# Column 'event_name' has been renamed to 'named_events' in table sqlmesh-public-demo.tcloud_raw_data.raw_events
+
+# Updated Schema:
+#   event_id: STRING
+#   named_events: STRING
+#   event_timestamp: TIMESTAMP
+#   user_id: STRING
+
+# run sqlmesh for the incremental_events.sql model
+sqlmesh run --ignore-cron
+
+# expected output
+# google.api_core.exceptions.BadRequest: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/sqlmesh-public-demo/queries/0af1142b-cf71-4dc2-aa56-f60b09af777b?maxResults=0&location=US&prettyPrint=false: Unrecognized name: event_name; Did you mean event_id? at
+# [1:254]
+
+# Location: US
+# Job ID: 0af1142b-cf71-4dc2-aa56-f60b09af777b
+
+# look at the error within the Tobiko Cloud UI
+# https://sqlmesh-prod-enterprise-public-demo-sefz6ezt4q-uc.a.run.app/observer/environments/prod/runs/8ee6076967e342409d321f8c644282fd
+
+# fix the error
+# this command defaults to fixing the error, so no need to add options
+python demo_scripts/main.py rename-column
+
+# expected output
+# Original Schema:
+#   event_id: STRING
+#   named_events: STRING
+#   event_timestamp: TIMESTAMP
+#   user_id: STRING
+
+# Column 'named_events' has been renamed to 'event_name' in table sqlmesh-public-demo.tcloud_raw_data.raw_events
+
+# Updated Schema:
+#   event_id: STRING
+#   event_name: STRING
+#   event_timestamp: TIMESTAMP
+#   user_id: STRING
+
+# rerun sqlmesh for the incremental_events.sql model
+sqlmesh run --ignore-cron
+
+# expected output
+# [1/1] tcloud_demo.incremental_events_allow_partials evaluated in 7.76s
+# [1/1] tcloud_demo.incremental_events evaluated in 13.76s
+# Evaluating models ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.0% • 2/2 • 0:00:13                                                                                                                                                                                      
+
+# All model batches have been executed successfully
+
+# Run finished for environment 'prod'
 ```
-
-More details on the demo video will be added soon!
+</details>
 
 
 ### Credits
