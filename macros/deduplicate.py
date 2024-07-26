@@ -29,6 +29,7 @@ def deduplicate(evaluator, relation: exp.Table,partition_by: list[exp.Expression
     ])
 
     # Construct the ORDER BY clause
+    # TODO: add validation to ensure only 'asc' and 'desc' are used, fail otherwise
     order_expressions = []
     for order_item in order_by:
         parts = order_item.split()
@@ -52,8 +53,8 @@ def deduplicate(evaluator, relation: exp.Table,partition_by: list[exp.Expression
         order=order
     )
 
-    # Construct the QUALIFY clause
-    qualify_clause = exp.EQ(
+    # get the first unique row
+    first_unique_row = exp.EQ(
         this=window_function,
         expression=exp.Literal.number(1)
     )
@@ -62,11 +63,11 @@ def deduplicate(evaluator, relation: exp.Table,partition_by: list[exp.Expression
     query = (
         exp.Select(expressions=[exp.Star()])
         .from_(relation)
-        .qualify(qualify_clause)
+        .qualify(first_unique_row)
     )
 
     return query
 
 # Test the macro
-sql = "@deduplicate(test_table, [user_id, cast(timestamp as date)], ['timestamp desc', 'status asc'])"
-print(MacroEvaluator().transform(parse_one(sql)).sql())
+# sql = "@deduplicate(test_table, [user_id, cast(timestamp as date)], ['timestamp desc', 'status asc'])"
+# print(MacroEvaluator().transform(parse_one(sql)).sql())
