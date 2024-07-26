@@ -23,6 +23,7 @@ def deduplicate(evaluator, relation: exp.Table,partition_by: list[exp.Expression
         'SELECT * FROM demo.table QUALIFY ROW_NUMBER() OVER (PARTITION BY user_id, CAST(timestamp AS date) ORDER BY timestamp DESC, status ASC) = 1'
     """
     # Construct the PARTITION BY clause
+    # TODO: cast the partition_by columns to whatever is in the arg
     partition = exp.Tuple(expressions=[
         exp.cast(col, "date") if isinstance(col, exp.Cast) else col
         for col in partition_by
