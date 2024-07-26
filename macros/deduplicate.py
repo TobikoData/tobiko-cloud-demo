@@ -5,8 +5,14 @@ from sqlmesh import macro
 from sqlglot import parse_one
 from sqlmesh.core.macros import MacroEvaluator
 
+
 @macro()
-def deduplicate(evaluator, relation: exp.Table,partition_by: list[exp.Expression], order_by: list[str]) -> exp.Query:
+def deduplicate(
+    evaluator,
+    relation: exp.Expression,
+    partition_by: list[exp.Expression],
+    order_by: list[str],
+) -> exp.Query:
     """Returns a QUERY to deduplicate rows within a table
 
     Args:
@@ -23,51 +29,51 @@ def deduplicate(evaluator, relation: exp.Table,partition_by: list[exp.Expression
         'SELECT * FROM demo.table QUALIFY ROW_NUMBER() OVER (PARTITION BY user_id, CAST(timestamp AS date) ORDER BY timestamp DESC, status ASC) = 1'
     """
     # Construct the PARTITION BY clause
-    # TODO: cast the partition_by columns to whatever is in the arg
-    partition = exp.Tuple(expressions=[
-        exp.cast(col, "date") if isinstance(col, exp.Cast) else col
-        for col in partition_by
-    ])
+    partition = exp.Tuple(
+        expressions=[
+            col
+            if not isinstance(col, exp.Cast)
+            else exp.Cast(this=col.this, to=col.args.get("to"))
+            for col in partition_by
+        ]
+    )
 
-    # Construct the ORDER BY clause
-    # TODO: add validation to ensure only 'asc' and 'desc' are used, fail otherwise
+    # Construct the ORDER BY clause with validation
     order_expressions = []
     for order_item in order_by:
         parts = order_item.split()
-        if len(parts) == 2 and parts[1].upper() in ('ASC', 'DESC'):
+        if len(parts) == 2 and parts[1].upper() in ("ASC", "DESC"):
             column, direction = parts
             expr = exp.Column(this=column)
-            if direction.upper() == 'DESC':
+            if direction.upper() == "DESC":
                 expr = exp.Ordered(this=expr, desc=True)
             else:
                 expr = exp.Ordered(this=expr, desc=False)
             order_expressions.append(expr)
-        else:
+        elif len(parts) == 1:
             order_expressions.append(exp.Column(this=order_item))
+        else:
+            raise ValueError(
+                f"Invalid order_by clause: {order_item}. Only 'asc' and 'desc' are allowed."
+            )
 
     order = exp.Order(expressions=order_expressions)
 
     # Construct the window function
     window_function = exp.Window(
-        this=exp.RowNumber(),
-        partition_by=partition,
-        order=order
+        this=exp.RowNumber(), partition_by=partition, order=order
     )
 
     # get the first unique row
-    first_unique_row = exp.EQ(
-        this=window_function,
-        expression=exp.Literal.number(1)
-    )
+    first_unique_row = exp.EQ(this=window_function, expression=exp.Literal.number(1))
 
     # Construct the final query
     query = (
-        exp.Select(expressions=[exp.Star()])
-        .from_(relation)
-        .qualify(first_unique_row)
+        exp.Select(expressions=[exp.Star()]).from_(relation).qualify(first_unique_row)
     )
 
     return query
+
 
 # Test the macro
 # sql = "@deduplicate(test_table, [user_id, cast(timestamp as date)], ['timestamp desc', 'status asc'])"

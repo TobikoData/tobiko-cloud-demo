@@ -9,5 +9,9 @@ MODEL (
   )))
 );
 
+with raw_data as (
+  select * from tcloud_demo.seed_raw_orders
+)
+
 select * from
-(@deduplicate(tcloud_demo.seed_raw_orders, [id, cast(order_date as date)], ['order_date desc', 'status asc']))
+(@deduplicate(raw_data, [id, cast(order_date as timestamp)], ['order_date desc', 'status asc']))
