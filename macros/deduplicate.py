@@ -4,6 +4,7 @@ from sqlglot import exp
 from sqlmesh import macro
 from sqlglot import parse_one
 from sqlmesh.core.macros import MacroEvaluator
+from sqlmesh.utils.errors import MacroEvalError, SQLMeshError
 
 
 @macro()
@@ -28,6 +29,14 @@ def deduplicate(
         >>> MacroEvaluator().transform(parse_one(sql)).sql()
         'SELECT * FROM demo.table QUALIFY ROW_NUMBER() OVER (PARTITION BY user_id, CAST(timestamp AS date) ORDER BY timestamp DESC, status ASC) = 1'
     """
+    # Debugging: Print the type and content of the relation
+    # print(f"Relation type: {type(relation)}")
+    # print(f"Relation content: {relation}")
+
+    # # Validate the relation is a table or CTE
+    # if not isinstance(relation, (exp.Table, exp.CTE)):
+    #     raise SQLMeshError("The relation must be a table or CTE.")
+
     # Construct the PARTITION BY clause
     partition = exp.Tuple(
         expressions=[
@@ -53,7 +62,7 @@ def deduplicate(
         elif len(parts) == 1:
             order_expressions.append(exp.Column(this=order_item))
         else:
-            raise ValueError(
+            raise SQLMeshError(
                 f"Invalid order_by clause: {order_item}. Only 'asc' and 'desc' are allowed."
             )
 
