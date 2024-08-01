@@ -14,8 +14,7 @@ SELECT
   order_id,
   payment_method,
   amount / 100 AS amount, /* `amount` is currently stored in cents, so we convert it to dollars */
-  'example_column' AS example_column, /* advanced change categorization example, in open source this will force an indirect breacking change on all downstream models, with Tobiko Cloud it will make this an indirect non-breaking change where this column is NOT referenced downstream */
-  -- 'new_column' AS new_column_from_sung, /* non-breaking change example  */
+  -- 'new_column' AS new_column, /* non-breaking change example  */
 FROM tcloud_demo.seed_raw_payments
 
 -- how to generate unit test code without manually writing yaml by hand
