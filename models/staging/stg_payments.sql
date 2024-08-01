@@ -20,4 +20,3 @@ FROM tcloud_demo.seed_raw_payments
 -- how to generate unit test code without manually writing yaml by hand
 -- this will generate a file in the tests/ folder: test_stg_payments.yaml
 -- sqlmesh create_test tcloud_demo.stg_payments --query tcloud_demo.seed_raw_payments "select * from tcloud_demo.seed_raw_payments limit 5" 
--- Check out this debugger view in Tobiko Cloud: https://cloud.tobikodata.com/sqlmesh/tobiko/public-demo/observer/environments/prod/runs/f0af9c8fea6e4ad6b5124229bb94526e
