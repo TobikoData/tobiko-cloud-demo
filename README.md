@@ -1,8 +1,10 @@
 <h2 align="center">
 
-![](images/logo-tobiko-cloud.svg)
+![](images/elt_diagram.png)
 
 </h2>
+
+> Extract, Load, Transform (ELT) Example Data Architecture
 
 This is a simple, loveable, and complete Tobiko Cloud demo project with the goal of running multiple, realistic scenarios very fast. 
 
