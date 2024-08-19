@@ -7,11 +7,11 @@ gateways:
             database: dev
             host: {{ env_var('REDSHIFT_HOST') }}
             port: 5439
+            concurrent_tasks: 1
 
         state_connection:
             type: duckdb
             database: redshift_state.db
-            concurrent_tasks: 1
 
 default_gateway: redshift_gateway
 
