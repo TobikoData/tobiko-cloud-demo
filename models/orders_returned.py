@@ -34,7 +34,7 @@ def execute(
 ) -> pd.DataFrame:
     # Fetch data from the stg_orders model, automatically captures the model's dependencies
     table = context.table("tcloud_demo.stg_orders")
-    df = context.fetchdf(f"SELECT * FROM {table}")
+    df = context.fetchdf(f"SELECT * FROM {table} limit 5")
 
     # Filter only where status equals "returned"
     df_returned = df[df['status'] == 'returned']
