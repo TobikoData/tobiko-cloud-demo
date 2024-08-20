@@ -51,6 +51,7 @@ WITH customers AS (
     customer_orders.number_of_orders,
     customer_payments.total_amount AS customer_lifetime_value,
     CONCAT(customers.first_name, ' ', customers.last_name) AS full_name, -- Hive specific function
+    RAND() AS random_number -- Hive specific function
   FROM customers
   LEFT JOIN customer_orders
     ON customers.customer_id = customer_orders.customer_id
