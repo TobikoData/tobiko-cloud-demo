@@ -33,7 +33,7 @@ jobs:
 
       - name: Append raw events to tcloud_raw_data.raw_events to display observer metrics
         run: |
-          python demo_scripts/main.py append-rawdata
+          poetry run python demo_scripts/main.py append-rawdata
         env:
           GOOGLE_SQLMESH_CREDENTIALS: ${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}
 
