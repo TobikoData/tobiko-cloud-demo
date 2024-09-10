@@ -41,5 +41,5 @@ jobs:
         run: |
           poetry run tcloud sqlmesh run
         env:
-          TOBIKO_CLOUD_TOKEN: '${{ secrets.TCLOUD_TOKEN }}'
+          TCLOUD_TOKEN: '${{ secrets.TCLOUD_TOKEN }}'
           GOOGLE_SQLMESH_CREDENTIALS: ${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}
