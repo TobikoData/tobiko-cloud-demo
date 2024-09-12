@@ -5,4 +5,4 @@ projects:
         extras: bigquery,web,github
 default_project: public-demo
 # export TCLOUD_TOKEN=<your token> in your shell and as a secret in github actions
-# you can alias the tcloud cli in your shell: alias sqlmesh='tcloud sqlmesh'
+# you can alias the tcloud cli in your shell for UX familiarity: alias sqlmesh='tcloud sqlmesh'
