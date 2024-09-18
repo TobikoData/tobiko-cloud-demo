@@ -1,5 +1,5 @@
 MODEL (
-  name tcloud_demo.orders,
+  name preview_sandbox.orders,
   cron '@daily',
   grain order_id,
   audits (UNIQUE_VALUES(columns = (
@@ -14,14 +14,14 @@ MODEL (
 WITH orders AS (
   SELECT
     *
-  FROM tcloud_demo.stg_orders
+  FROM preview_sandbox.stg_orders
 ), payments AS (
   SELECT
     payment_id,
     order_id,
     payment_method,
     amount
-  FROM tcloud_demo.stg_payments
+  FROM preview_sandbox.stg_payments
 ), order_payments AS (
   SELECT
     order_id,

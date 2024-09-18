@@ -1,5 +1,5 @@
 MODEL (
-  name tcloud_demo.stg_orders,
+  name preview_sandbox.stg_orders,
   cron '@daily',
   grain order_id,
   audits (UNIQUE_VALUES(columns = (
@@ -14,4 +14,4 @@ SELECT
   user_id AS customer_id,
   order_date,
   status
-FROM tcloud_demo.seed_raw_orders
+FROM preview_sandbox.seed_raw_orders

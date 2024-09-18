@@ -1,8 +1,8 @@
 projects:
-    public-demo:
-        url: https://cloud.tobikodata.com/sqlmesh/tobiko/public-demo/
+    preview-sandbox:
+        url: https://internal.cloud.tobikodata.com/sqlmesh/tobiko/preview/
         gateway: tobiko_cloud
         extras: bigquery,web,github
-default_project: public-demo
+default_project: preview-sandbox
 # export TCLOUD_TOKEN=<your token> in your shell and as a secret in github actions
 # you can alias the tcloud cli in your shell: alias sqlmesh='tcloud sqlmesh'

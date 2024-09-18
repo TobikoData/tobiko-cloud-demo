@@ -6,7 +6,7 @@ import pandas as pd
 from sqlmesh import ExecutionContext, model
 
 @model(
-    "tcloud_demo.orders_returned",
+    "preview_sandbox.orders_returned",
     owner="sung",
     cron="@daily",
     columns={
@@ -33,7 +33,7 @@ def execute(
     **kwargs: t.Any,
 ) -> pd.DataFrame:
     # Fetch data from the stg_orders model, automatically captures the model's dependencies
-    table = context.table("tcloud_demo.stg_orders")
+    table = context.table("preview_sandbox.stg_orders")
     df = context.fetchdf(f"SELECT * FROM {table}")
 
     # Filter only where status equals "returned"

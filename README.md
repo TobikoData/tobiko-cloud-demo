@@ -150,8 +150,8 @@ python demo_scripts/main.py rename-column
 sqlmesh run --ignore-cron
 
 # expected output
-# [1/1] tcloud_demo.incremental_events_allow_partials evaluated in 7.76s
-# [1/1] tcloud_demo.incremental_events evaluated in 13.76s
+# [1/1] preview_sandbox.incremental_events_allow_partials evaluated in 7.76s
+# [1/1] preview_sandbox.incremental_events evaluated in 13.76s
 # Evaluating models ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100.0% • 2/2 • 0:00:13                                                                                                                                                                                      
 
 # All model batches have been executed successfully

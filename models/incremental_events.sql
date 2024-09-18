@@ -1,5 +1,5 @@
 MODEL (
-  name tcloud_demo.incremental_events,
+  name preview_sandbox.incremental_events,
   kind INCREMENTAL_BY_TIME_RANGE (
     time_column (event_timestamp, '%Y-%m-%d'), -- DELETE by time range, then INSERT
     lookback 2, -- handle late arriving events for the past 2 (2*1) days based on cron interval
@@ -22,9 +22,9 @@ MODEL (
 -- step 3: pick a start date to backfill like: '2024-06-18'
 -- step 4: validate only a portion of rows were backfilled: sqlmesh fetchdf "select * from tcloud_demo__dev.incremental_events"
 -- step 5: `sqlmesh plan` to promote to prod with a virtual update, note: the dev backfill preview won't be reused for promotion and is only for dev purposes
--- step 6: sqlmesh plan --restate-model "tcloud_demo.incremental_events", to invoke a backfill to mirror dev's data preview
+-- step 6: sqlmesh plan --restate-model "preview_sandbox.incremental_events", to invoke a backfill to mirror dev's data preview
 -- step 7: pick the same backfill start date for prod as dev's above: '2024-06-18'
--- step 8: validate changes to prod: sqlmesh fetchdf "select * from tcloud_demo.incremental_events"
+-- step 8: validate changes to prod: sqlmesh fetchdf "select * from preview_sandbox.incremental_events"
 -- Note: by default, only complete intervals are processed, so if today was 2024-06-21 and the day isn't over, it would NOT backfill the day's interval of data because it's not complete
 
 SELECT
@@ -44,7 +44,7 @@ WHERE
     event_timestamp::date AS ts, -- Custom measure time column `ts`
     COUNT(*) AS daily_row_count, -- Daily row count
     COUNT(DISTINCT event_name) AS unique_event_name_count, -- Count unique event_name values
-  FROM tcloud_demo.incremental_events
+  FROM preview_sandbox.incremental_events
   WHERE event_timestamp BETWEEN @start_ds AND @end_ds -- Filter measure on time
   GROUP BY event_timestamp -- Group measure by time
 );
@@ -58,7 +58,7 @@ WHERE
       @event_names,
       x -> COUNT(CASE WHEN event_name = x THEN 1 END) AS @{x}_count
     ),
-  FROM tcloud_demo.incremental_events
+  FROM preview_sandbox.incremental_events
   WHERE event_timestamp::date BETWEEN @start_ds AND @end_ds 
   group by event_timestamp::date
 );

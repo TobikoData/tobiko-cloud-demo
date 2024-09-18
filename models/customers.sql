@@ -1,5 +1,5 @@
 MODEL (
-  name tcloud_demo.customers,
+  name preview_sandbox.customers,
   cron '@daily',
   grain customer_id,
   audits (UNIQUE_VALUES(columns = (
@@ -12,18 +12,18 @@ MODEL (
 WITH customers AS (
   SELECT
     *
-  FROM tcloud_demo.stg_customers
+  FROM preview_sandbox.stg_customers
 ), orders AS (
   SELECT
     *
-  FROM tcloud_demo.stg_orders
+  FROM preview_sandbox.stg_orders
 ), payments AS (
   SELECT
     payment_id,
     order_id,
     payment_method,
     amount
-  FROM tcloud_demo.stg_payments
+  FROM preview_sandbox.stg_payments
 ), customer_orders AS (
   SELECT
     customer_id,
@@ -62,6 +62,6 @@ SELECT
 FROM final
 
 -- create a unit test from this SQL model
--- sqlmesh create_test tcloud_demo.customers --query tcloud_demo.stg_customers "select * from tcloud_demo.stg_customers limit 5" \
--- --query tcloud_demo.stg_orders "select * from tcloud_demo.stg_orders limit 5" \
--- --query tcloud_demo.stg_payments "select * from tcloud_demo.stg_payments limit 5"
+-- sqlmesh create_test preview_sandbox.customers --query preview_sandbox.stg_customers "select * from preview_sandbox.stg_customers limit 5" \
+-- --query preview_sandbox.stg_orders "select * from preview_sandbox.stg_orders limit 5" \
+-- --query preview_sandbox.stg_payments "select * from preview_sandbox.stg_payments limit 5"
