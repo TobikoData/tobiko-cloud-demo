@@ -11,7 +11,7 @@ gateways:
 default_gateway: tobiko_cloud
 
 model_defaults:
-    dialect: bigquery
+    dialect: redshift
 
 # make Tobiko Cloud only allow deploying to dev environments, use env var to override in CI/CD
 allow_prod_deploy: {{ env_var('ALLOW_PROD_DEPLOY', 'false') }}
