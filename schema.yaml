@@ -42,9 +42,26 @@
       STRING, item_list_id STRING, item_list_name STRING, item_list_index STRING,
       promotion_id STRING, promotion_name STRING, creative_name STRING, creative_slot
       STRING>>
+- name: '`sqlmesh-public-demo`.`tcloud_raw_data`.`product_usage`'
+  columns:
+    product_id: STRING
+    customer_id: STRING
+    last_usage_date: TIMESTAMP
+    usage_count: INT64
+    feature_utilization_score: FLOAT64
+    user_segment: STRING
 - name: '`sqlmesh-public-demo`.`tcloud_raw_data`.`raw_events`'
   columns:
     event_id: STRING
     event_name: STRING
     event_timestamp: TIMESTAMP
     user_id: STRING
+- name: '`sqlmesh-public-demo`.`tcloud_raw_data`.`sales`'
+  columns:
+    transaction_id: STRING
+    product_id: STRING
+    customer_id: STRING
+    transaction_amount: NUMERIC
+    transaction_timestamp: TIMESTAMP
+    payment_method: STRING
+    currency: STRING
