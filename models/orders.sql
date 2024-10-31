@@ -20,11 +20,13 @@ WITH orders AS (
     payment_id,
     order_id,
     payment_method,
-    amount
+    amount,
+    example_column
   FROM tcloud_demo.stg_payments
 ), order_payments AS (
   SELECT
     order_id,
+    example_column,
     @EACH(
       @payment_methods,
       x -> SUM(CASE WHEN payment_method = x THEN amount ELSE 0 END) AS @{x}_amount
@@ -32,7 +34,8 @@ WITH orders AS (
     SUM(amount) AS total_amount
   FROM payments
   GROUP BY
-    order_id
+    order_id,
+    example_column
 ), final AS (
   SELECT
     @gen_surrogate_key([orders.order_id, orders.customer_id]) AS surrogate_key, /* custom macro example */
@@ -41,7 +44,8 @@ WITH orders AS (
     orders.order_date,
     orders.status,
     @EACH(@payment_methods, x -> order_payments.@{x}_amount),
-    order_payments.total_amount AS amount
+    order_payments.total_amount AS amount,
+    order_payments.example_column
   FROM orders
   LEFT JOIN order_payments
     ON orders.order_id = order_payments.order_id
