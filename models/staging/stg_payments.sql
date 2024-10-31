@@ -14,6 +14,7 @@ SELECT
   order_id,
   payment_method,
   amount / 100 AS amount, /* `amount` is currently stored in cents, so we convert it to dollars */
+  'example_column' AS example_column, /* advanced change categorization example */
   -- 'new_column' AS new_column_from_sung, /* non-breaking change example  */
 FROM tcloud_demo.seed_raw_payments
 
