@@ -1,5 +1,4 @@
 - name: '`bigquery-public-data`.`ga4_obfuscated_sample_ecommerce`.`events_20210131`'
-  description: example of referencing an external model outside of SQLMesh's control
   columns:
     event_date: STRING
     event_timestamp: INT64
@@ -43,3 +42,9 @@
       STRING, item_list_id STRING, item_list_name STRING, item_list_index STRING,
       promotion_id STRING, promotion_name STRING, creative_name STRING, creative_slot
       STRING>>
+- name: '`sqlmesh-public-demo`.`tcloud_raw_data`.`raw_events`'
+  columns:
+    event_id: STRING
+    event_name: STRING
+    event_timestamp: TIMESTAMP
+    user_id: STRING
