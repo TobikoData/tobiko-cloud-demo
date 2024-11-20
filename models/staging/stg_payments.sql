@@ -23,8 +23,8 @@ FROM tcloud_demo.seed_raw_payments
 
 -- run the audits "tcloud sqlmesh audit --model tcloud_demo.stg_payments"
 
--- table_diff - "sqlmesh table_diff afzal_demo:prod tcloud_demo.stg_payments"
+-- table_diff - "tcloud sqlmesh table_diff afzal_demo:prod tcloud_demo.stg_payments"
 
--- sql transpilation "sqlmesh render --dialect databricks tcloud_demo.stg_payments"
+-- sql transpilation "tcloud sqlmesh render --dialect databricks tcloud_demo.stg_payments"
 
 -- tcloud sqlmesh fetchdf "select * from tcloud_demo__afzal_demo.stg_payments"
