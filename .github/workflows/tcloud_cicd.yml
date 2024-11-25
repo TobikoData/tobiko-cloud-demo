@@ -1,5 +1,5 @@
-name: SQLMesh Bot
-run-name: 🧃 SQLMesh Bot 🧃
+name: Tobiko Cloud CI/CD Bot
+run-name: 🧃 Tobiko Cloud CI/CD Bot 🧃
 
 on:
   pull_request:
@@ -50,13 +50,13 @@ jobs:
         with:
           credentials_json: '${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}'
 
-      - name: Install SQLMesh Enterprise + Dependencies
+      - name: Install tcloud CLI + Dependencies
         run: |
-          pip install poetry keyring keyrings-google-artifactregistry-auth
+          pip install poetry
           poetry install --no-root
         shell: bash
 
-      - name: Run CI/CD Bot
+      - name: Run tcloud CI/CD Bot
         run: |
           poetry run tcloud sqlmesh_cicd -p ${{ github.workspace }} github --token ${{ secrets.GITHUB_TOKEN }} run-all
         env: # TODO: update your GitHub secrets to include TCLOUD_TOKEN, GOOGLE_SQLMESH_CREDENTIALS
