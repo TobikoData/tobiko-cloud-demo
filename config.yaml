@@ -3,6 +3,7 @@ gateways:
         scheduler:
             type: cloud
         # connection:
+        # TODO: add this into the Tobiko Cloud Connections Page with the service account json in plain text. We will securely handle the credentials for you.
         #     type: bigquery
         #     method: service-account-json
         #     concurrent_tasks: 5
