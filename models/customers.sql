@@ -60,6 +60,7 @@ WITH customers AS (
 SELECT
   *
 FROM final
+limit 5
 
 -- create a unit test from this SQL model
 -- sqlmesh create_test tcloud_demo.customers --query tcloud_demo.stg_customers "select * from tcloud_demo.stg_customers limit 5" \
