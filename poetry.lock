@@ -1307,13 +1307,13 @@ files = [
 
 [[package]]
 name = "tcloud"
-version = "1.3.0"
+version = "1.2.0"
 description = "Tobiko Cloud CLI"
 optional = false
 python-versions = "*"
 files = [
-    {file = "tcloud-1.3.0-py3-none-any.whl", hash = "sha256:c28f5a2140079b84e38feac509a0c0977361a4d9fcc833815329722bf6bf38a4"},
-    {file = "tcloud-1.3.0.tar.gz", hash = "sha256:55636eca2150d12e0be509c2a9e9f7988b6891f3913dc171dc4485ce5d10f840"},
+    {file = "tcloud-1.2.0-py3-none-any.whl", hash = "sha256:1806bc4ae8af8a9dc571b4d0cd134ed430c21104aa7d025aa387d035f7c5d1f3"},
+    {file = "tcloud-1.2.0.tar.gz", hash = "sha256:6beeeb2292366c949a80d44dbe56179f852f2cf8ac7b279c7d660a9f7c746477"},
 ]
 
 [package.dependencies]
@@ -1383,4 +1383,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "289cbba1c2cf6af26215823226f3399d1237875d8e40c07f3fe43721104b80f2"
+content-hash = "728bcd43de8ef16076657a8a2114405390180be6dee6f97284229e4760e8d74b"
