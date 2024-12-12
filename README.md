@@ -165,6 +165,10 @@ sqlmesh run --ignore-cron
 2. git clone the sqlmesh-enterprise repo into the root directory
 3. add `_version.py` contents (`__version__ = version = '202450.7.0+85e4d5d'`) to this path: `sqlmesh-enterprise/sqlmesh_enterprise/_version.py`
 4. run `astro dev start`
+5. setup Tobiko Cloud connection in the Airflow UI
+6. add the `local.py` dag to the `/dags` directory
+7. Turn on the DAG in the Airflow UI
+8. It should sync automatically through the Tobiko Cloud connection.
 
 ### Credits
 
