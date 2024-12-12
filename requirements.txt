@@ -1,10 +1,2 @@
 # Astro Runtime includes the following pre-installed providers packages: https://www.astronomer.io/docs/astro/runtime-image-architecture#provider-packages
 sqlmesh==0.139.0
-
-# /Users/sung/Desktop/git_repos/tobiko-cloud-demo/sqlmesh-enterprise/sqlmesh_enterprise/state_sync/base.py
-
-# /Users/sung/Desktop/git_repos/tobiko-cloud-demo/.venv/lib/python3.12/site-packages/sqlmesh_enterprise/_version.py
-
-# /Users/sung/Desktop/git_repos/tobiko-cloud-demo/.venv/lib/python3.12/site-packages/sqlmesh_enterprise/_version.py
-
-# /Users/sung/Desktop/git_repos/tobiko-cloud-demo/sqlmesh-enterprise/sqlmesh_enterprise/state_sync/base.py

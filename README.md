@@ -160,6 +160,11 @@ sqlmesh run --ignore-cron
 ```
 </details>
 
+### Airflow Preview Setup
+1. Download the astro CLI and Docker Desktop
+2. git clone the sqlmesh-enterprise repo into the root directory
+3. add `_version.py` contents (`__version__ = version = '202450.7.0+85e4d5d'`) to this path: `sqlmesh-enterprise/sqlmesh_enterprise/_version.py`
+4. run `astro dev start`
 
 ### Credits
 
