@@ -3,7 +3,8 @@ MODEL (
   kind SCD_TYPE_2_BY_TIME (
     unique_key id,
     updated_at_name event_date
-  )
+  ),
+  enabled: false
 );
 
 SELECT
