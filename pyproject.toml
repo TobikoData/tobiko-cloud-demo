@@ -6,8 +6,8 @@ authors = []
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
-tcloud = "2.0.0"
+python = "~3.10.13"
+tcloud = "2.1.0"
 typer="^0.12.3"
 google-auth="2.34.0"
 google-cloud-bigquery="3.25.0"
@@ -20,11 +20,6 @@ keyrings-google-artifactregistry-auth = "1.1.2"
 ruff = "^0.4.7"
 mypy = "^1.10.0"
 pytest = "8.1.1"
-
-[[tool.poetry.source]]
-name = "sqlmesh-enterprise"
-url = "https://us-west2-python.pkg.dev/tobiko-1/sqlmesh-enterprise/simple/"
-priority = "supplemental"
 
 [build-system]
 requires = ["poetry-core"]
