@@ -29,7 +29,7 @@ MODEL (
 
 SELECT
   event_id,
-  1 as dummy_id,
+  3 as dummy_id,
   event_name,
   event_timestamp::date as event_timestamp,
   user_id,
