@@ -3,7 +3,7 @@ MODEL (
   kind INCREMENTAL_BY_TIME_RANGE (
     time_column (event_timestamp, '%Y-%m-%d'), -- DELETE by time range, then INSERT
     lookback 2, -- handle late arriving events for the past 2 (2*1) days based on cron interval
-    forward_only true -- All changes will be forward only
+    -- forward_only true -- All changes will be forward only
   ),
   start '2024-06-17',
   cron '@daily',
@@ -29,6 +29,7 @@ MODEL (
 
 SELECT
   event_id,
+  1 as dummy_id,
   event_name,
   event_timestamp::date as event_timestamp,
   user_id,
