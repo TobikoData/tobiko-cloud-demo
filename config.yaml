@@ -21,6 +21,7 @@ cicd_bot:
     type: github
     merge_method: squash
     enable_deploy_command: true
+    skip_pr_backfill: false
     auto_categorize_changes:
       external: full
       python: full
