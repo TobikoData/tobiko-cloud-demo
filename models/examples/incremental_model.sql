@@ -10,7 +10,7 @@ MODEL (
 );
 
 SELECT
-  id,
+  cast(id as text) as id,
   item_id,
   event_date
 FROM tcloud_demo.seed_model
