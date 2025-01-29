@@ -1,7 +1,7 @@
 MODEL (
   name tcloud_demo.stg_payments,
   cron '@daily',
-  grain payment_id,
+  grains payment_id,
   audits (UNIQUE_VALUES(columns = (
     payment_id
   )), NOT_NULL(columns = (
@@ -14,7 +14,10 @@ SELECT
   order_id,
   payment_method,
   amount / 100 AS amount, /* `amount` is currently stored in cents, so we convert it to dollars */
-  -- 'new_column' AS new_column, /* non-breaking change example  */
+  'new_column' AS new_column_V3, /* non-breaking change example  */
+  'new_column' AS new_column_v2, /* non-breaking change example  */
+  'new_column' AS new_column_v4, /* non-breaking change example  */
+  -- 'new_column' AS new_column_v5, /* non-breaking change example  */
 FROM tcloud_demo.seed_raw_payments
 
 -- how to generate unit test code without manually writing yaml by hand
