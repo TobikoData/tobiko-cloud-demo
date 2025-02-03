@@ -2,11 +2,14 @@ MODEL (
   name tcloud_demo.customers,
   cron '@daily',
   grain customer_id,
-  audits (UNIQUE_VALUES(columns = (
-    customer_id
-  )), NOT_NULL(columns = (
-    customer_id
-  )))
+  audits (
+    UNIQUE_VALUES(columns = (
+      customer_id
+    )),
+    NOT_NULL(columns = (
+      customer_id
+    ))
+  )
 );
 
 WITH customers AS (
@@ -60,8 +63,3 @@ WITH customers AS (
 SELECT
   *
 FROM final
-
--- create a unit test from this SQL model
--- sqlmesh create_test tcloud_demo.customers --query tcloud_demo.stg_customers "select * from tcloud_demo.stg_customers limit 5" \
--- --query tcloud_demo.stg_orders "select * from tcloud_demo.stg_orders limit 5" \
--- --query tcloud_demo.stg_payments "select * from tcloud_demo.stg_payments limit 5"
