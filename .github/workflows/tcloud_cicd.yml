@@ -7,9 +7,9 @@ on:
     - synchronize
     - opened
   # Required if using comments to issue commands to the bot
-  # issue_comment:
-  #   types:
-  #   - created
+  issue_comment:
+    types:
+    - created
   # Required if using required approvers to automate deployments
   pull_request_review:
     types:
@@ -45,15 +45,9 @@ jobs:
         with:
           ref: refs/pull/${{ github.event.issue.pull_request && github.event.issue.number || github.event.pull_request.number  }}/merge
 
-      - name: Authenticate to Google Cloud
-        uses: 'google-github-actions/auth@v2'
-        with:
-          credentials_json: '${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}'
-
       - name: Install tcloud CLI + Dependencies
         run: |
-          pip install poetry
-          poetry install --no-root
+          pip install -r requirements.txt
         shell: bash
 
       - name: Run tcloud CI/CD Bot
