@@ -27,6 +27,7 @@ default_gateway: tobiko_cloud
 model_defaults:
     dialect: bigquery
     start: 2024-12-01
+    validate_query: true
 
 # enables synchronized deployments to prod when a PR is merged
 cicd_bot:
