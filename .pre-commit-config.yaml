@@ -1,9 +1,9 @@
-repos:
-- repo: local
-  hooks:
-    - id: sqlmesh-format
-      name: SQLMesh Format
-      entry: tcloud sqlmesh format
-      language: system
-      types: [sql]
-      pass_filenames: false
+repos:                    # List of repository sources for pre-commit hooks
+- repo: local            # Specifies that these hooks are defined locally (not from external repos)
+  hooks:                 # List of hooks to run
+    - id: sqlmesh-format    # Unique identifier for this hook
+      name: SQLMesh Format  # Human-readable name for the hook
+      entry: tcloud sqlmesh format  # The command to run when the hook is triggered
+      language: system      # Specifies that this hook runs using system commands
+      types: [sql]         # File types this hook should run on (only SQL files)
+      pass_filenames: false # Don't pass the filenames to the command
