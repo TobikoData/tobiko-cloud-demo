@@ -1,0 +1,9 @@
+repos:
+- repo: local
+  hooks:
+    - id: sqlmesh-format
+      name: SQLMesh Format
+      entry: tcloud sqlmesh format
+      language: system
+      types: [sql]
+      pass_filenames: false
