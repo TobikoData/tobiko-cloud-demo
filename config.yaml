@@ -2,10 +2,12 @@ gateways:
     tobiko_cloud: # this will use the config in tcloud.yaml for state_connection
         scheduler: # TODO: add the connection info below into the Tobiko Cloud Connections Page with the service account json in plain text for this scheduler
             type: cloud
-        # state_connection:
-        #   token: {{ env_var('TCLOUD_TOKEN') }}
-        #   type: cloud
-        #   url: https://cloud.tobikodata.com/sqlmesh/tobiko/public-demo/
+            default_catalog: sqlmesh-public-demo # this is the tricky piece to get the default catalog to work with the enterprise context in the table_diff_script.py
+        state_connection:
+            token: {{ env_var('TCLOUD_TOKEN') }}
+            type: cloud
+            url: https://cloud.tobikodata.com/sqlmesh/tobiko/public-demo/
+          # catalog: sqlmesh-public-demo
         connection: # This connection is used for automatic unit test generation
             type: bigquery
             method: service-account-json
@@ -13,6 +15,7 @@ gateways:
             register_comments: true
             keyfile_json: {{ env_var('GOOGLE_SQLMESH_CREDENTIALS') }}
             project: sqlmesh-public-demo
+            # default_catalog: sqlmesh-public-demo
     postgres:
         connection:
             type: postgres
@@ -24,10 +27,13 @@ gateways:
 
 default_gateway: tobiko_cloud
 
+# catalog: sqlmesh-public-demo
+
 model_defaults:
     dialect: bigquery
     start: 2024-12-01
     validate_query: true
+    # catalog: sqlmesh-public-demo
 
 # enables synchronized deployments to prod when a PR is merged
 cicd_bot:

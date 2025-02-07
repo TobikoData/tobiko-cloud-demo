@@ -12,7 +12,7 @@ This script is used to compare the tables in the database and print the differen
 from tobikodata.sqlmesh_enterprise.context import EnterpriseContext
 
 # Initialize the context with your project path and config
-context = EnterpriseContext(paths="/Users/sung/Desktop/git_repos/tobiko-cloud-demo/")
+context = EnterpriseContext(paths="/Users/sung/Desktop/git_repos/tobiko-cloud-demo/", gateway="tobiko_cloud")
 
 environment = "dev_sung" # TODO: this will be updated with dynamic pr environment name
 
