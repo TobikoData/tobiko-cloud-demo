@@ -19,7 +19,7 @@ gateways:
             database: sqlmesh_state_demo
 
 default_gateway: tobiko_cloud
-project: repo_a
+project: repo_b
 
 
 model_defaults:
