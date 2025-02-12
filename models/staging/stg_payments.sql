@@ -19,5 +19,5 @@ SELECT
   'new_column' AS new_column_v2, /* non-breaking change example  */
   'new_column' AS new_column_v4, /* non-breaking change example  */
   'new_column' AS new_column_v5 /* non-breaking change example  */
-/* 'new_column' AS new_column_v6, /* non-breaking change example  */ */
+/* 'new_column' AS new_column_v6 /* non-breaking change example  */ */
 FROM tcloud_demo.seed_raw_payments
