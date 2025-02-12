@@ -15,9 +15,9 @@ MODEL (
   )
 );
 
-/* command to generate unit test code in a yaml file */ /* sqlmesh create_test tcloud_demo.incremental_model --query tcloud_demo.seed_model "select * from tcloud_demo.seed_model limit 5" */
+/* run this command to synchronize multiple repos: tcloud sqlmesh -p . -p repo_b/ plan */
 SELECT
-  1 AS item_id,
-  3 AS new_column, /* breaking change, will backfill repo_b.model_2 */
+  1 AS item_id, /* breaking change, will backfill repo_b.model_2 but fail */
+  3 AS new_column,
   3 AS hello, /* non breaking change */
   CURRENT_DATE AS event_date
