@@ -1,42 +1,45 @@
 from tobikodata.scheduler_facades.dagster import SQLMeshEnterpriseDagster
-from dagster import (
-    EnvVar,
-    AssetKey,
-    SensorEvaluationContext,
-    EventLogEntry,
-    job,
-    asset_sensor,
-    RunRequest,
-    Definitions,
-)  # for accessing variables in .env file
+import dagster as dg
 
 # create and configure SQLMeshEnterpriseDagster instance named `sqlmesh`
 sqlmesh = SQLMeshEnterpriseDagster(
-    url=EnvVar("TOBIKO_CLOUD_BASE_URL").get_value(), # get the base url from the environment variable
-    token=EnvVar("TOBIKO_CLOUD_TOKEN").get_value(), # get the token from the environment variable
+    url=dg.EnvVar(
+        "TOBIKO_CLOUD_BASE_URL"
+    ).get_value(),  # get the base url from the environment variable
+    token=dg.EnvVar(
+        "TOBIKO_CLOUD_TOKEN"
+    ).get_value(),  # get the token from the environment variable
     dagster_graphql_host="localhost",  # Example GraphQL host (could be passed in an environment variable instead)
     dagster_graphql_port=3000,  # Example GraphQL port (could be passed in an environment variable instead)
 )
 
 
 # define a job to run when the asset is updated
-@job
+@dg.op
+def log_customers_updated(context):
+    context.log.info("customers updated")
+
+
+@dg.job
 def internal_customers_pipeline():
-    # custom logic goes here
-    print("customers updated")
+    log_customers_updated()
 
 
-@asset_sensor(
-    asset_key=AssetKey(
-        ["sqlmesh-public-demo", "tcloud_demo", "customers"]
+@dg.asset_sensor(
+    asset_key=dg.AssetKey(
+        ["sqlmesh-public-demo", "tcloud_demo", "incremental_events_allow_partials"]
     ),  # Asset key found in Dagster Asset Catalog
     job=internal_customers_pipeline,
 )
-def on_customers_updated(context: SensorEvaluationContext, asset_event: EventLogEntry):
-    yield RunRequest()
+def on_customers_updated(
+    context: dg.SensorEvaluationContext, asset_event: dg.EventLogEntry
+):
+    yield dg.RunRequest()
 
 
 # merge existing and sqlmesh definitions
-defs = Definitions(jobs=[internal_customers_pipeline], sensors=[on_customers_updated])
+defs = dg.Definitions(
+    jobs=[internal_customers_pipeline], sensors=[on_customers_updated]
+)
 
-defs = Definitions.merge(defs, sqlmesh.create_definitions(environment="prod"))
+defs = dg.Definitions.merge(defs, sqlmesh.create_definitions(environment="prod"))
