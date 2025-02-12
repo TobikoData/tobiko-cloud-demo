@@ -9,6 +9,7 @@ sqlmesh = SQLMeshEnterpriseDagster(
     token=dg.EnvVar(
         "TOBIKO_CLOUD_TOKEN"
     ).get_value(),  # get the token from the environment variable
+    # these configs automatically pick up new models from Tobiko Cloud
     dagster_graphql_host="localhost",  # Example GraphQL host (could be passed in an environment variable instead)
     dagster_graphql_port=3000,  # Example GraphQL port (could be passed in an environment variable instead)
 )
@@ -43,3 +44,16 @@ defs = dg.Definitions(
 )
 
 defs = dg.Definitions.merge(defs, sqlmesh.create_definitions(environment="prod"))
+
+# if you're testing it out for the first time, you can use the following code to create the definitions
+# from tobikodata.scheduler_facades.dagster import SQLMeshEnterpriseDagster
+# from dagster import EnvVar # for accessing variables in .env file
+
+# # create and configure SQLMeshEnterpriseDagster instance named `sqlmesh`
+# sqlmesh = SQLMeshEnterpriseDagster(
+#     url=EnvVar("TOBIKO_CLOUD_BASE_URL").get_value(), # environment variable from .env file
+#     token=EnvVar("TOBIKO_CLOUD_TOKEN").get_value(), # environment variable from .env file
+# )
+
+# # create Definitions object with `sqlmesh` object's `create_definitions()` method
+# tobiko_cloud_definitions = sqlmesh.create_definitions(environment="prod")
