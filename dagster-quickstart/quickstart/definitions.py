@@ -31,6 +31,7 @@ def internal_customers_pipeline():
         ["sqlmesh-public-demo", "tcloud_demo", "incremental_events_allow_partials"]
     ),  # Asset key found in Dagster Asset Catalog
     job=internal_customers_pipeline,
+    default_status=dg.DefaultSensorStatus.RUNNING,
 )
 def on_customers_updated(
     context: dg.SensorEvaluationContext, asset_event: dg.EventLogEntry
