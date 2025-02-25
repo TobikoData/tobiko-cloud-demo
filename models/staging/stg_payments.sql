@@ -14,10 +14,6 @@ SELECT
   order_id,
   payment_method,
   'advanced_cll_column' AS advanced_cll_column,
-  amount / 100 AS amount, /* `amount` is currently stored in cents, so we convert it to dollars */
-  'new_column' AS new_column_V3, /* non-breaking change example  */
-  'new_column' AS new_column_v2, /* non-breaking change example  */
-  'new_column' AS new_column_v4, /* non-breaking change example  */
-  'new_column' AS new_column_v5 /* non-breaking change example  */
-/* 'new_column' AS new_column_v6 /* non-breaking change example  */ */
+  amount / 100 AS amount /* `amount` is currently stored in cents, so we convert it to dollars */
+/* 'new_column' AS new_column_v10 /* non-breaking change example  */ */
 FROM tcloud_demo.seed_raw_payments
