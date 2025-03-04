@@ -1,7 +1,7 @@
 projects:
     public-demo:
         url: https://cloud.tobikodata.com/sqlmesh/tobiko/public-demo/
-        gateway: tobiko_cloud
+        gateway: public-demo
         extras: bigquery,web,github,postgres
 default_project: public-demo
 # export TCLOUD_TOKEN=<your token> in your shell and as a secret in github actions

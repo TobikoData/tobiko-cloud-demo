@@ -1,7 +1,8 @@
 gateways:
-    tobiko_cloud: # this will use the config in tcloud.yaml for state_connection
+    public-demo: # this will use the config in tcloud.yaml for state_connection
         scheduler: # TODO: add the connection info below into the Tobiko Cloud Connections Page with the service account json in plain text for this scheduler
             type: cloud
+            default_catalog: sqlmesh-public-demo
         connection: # This connection is used for automatic unit test generation
             type: bigquery
             method: service-account-json
@@ -18,7 +19,7 @@ gateways:
             password: {{ env_var('SQLMESH_STATE_PASSWORD') }}
             database: sqlmesh_state_demo
 
-default_gateway: tobiko_cloud
+default_gateway: public-demo
 project: repo_a
 
 
