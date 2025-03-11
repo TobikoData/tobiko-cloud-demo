@@ -47,7 +47,7 @@ jobs:
 
       - name: Install tcloud CLI + Dependencies
         run: |
-          pip install tcloud==2.7.0
+          pip install tcloud==2.8.4
         shell: bash
 
       - name: Run tcloud CI/CD Bot
