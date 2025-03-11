@@ -58,4 +58,5 @@ jobs:
           TCLOUD_CLIENT_SECRET: ${{ secrets.TCLOUD_CLIENT_SECRET }}
           TCLOUD_URL: https://cloud.tobikodata.com/sqlmesh/tobiko/public-demo/
           TCLOUD_GATEWAY: public-demo
+          TCLOUD_EXTRAS: bigquery,github
           GOOGLE_SQLMESH_CREDENTIALS: ${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}
