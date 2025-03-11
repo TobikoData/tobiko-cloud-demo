@@ -2,11 +2,14 @@ MODEL (
   name tcloud_demo.orders,
   cron '@daily',
   grain order_id,
-  audits (UNIQUE_VALUES(columns = (
-    surrogate_key
-  )), NOT_NULL(columns = (
-    surrogate_key
-  )))
+  audits (
+    UNIQUE_VALUES(columns = (
+      surrogate_key
+    )),
+    NOT_NULL(columns = (
+      surrogate_key
+    ))
+  )
 );
 
 @DEF(payment_methods, ['credit_card', 'coupon', 'bank_transfer', 'gift_card']);
@@ -20,7 +23,8 @@ WITH orders AS (
     payment_id,
     order_id,
     payment_method,
-    amount
+    amount,
+    advanced_cll_column
   FROM tcloud_demo.stg_payments
 ), order_payments AS (
   SELECT
