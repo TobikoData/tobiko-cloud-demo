@@ -47,12 +47,16 @@ jobs:
 
       - name: Install tcloud CLI + Dependencies
         run: |
-          pip install -r requirements.txt
+          pip install tcloud==2.8.4
         shell: bash
 
-      - name: Run tcloud CI/CD Bot
+      - name: Run tcloud CI/CD Bot 
         run: |
           tcloud sqlmesh_cicd -p ${{ github.workspace }} github --token ${{ secrets.GITHUB_TOKEN }} run-all
-        env: # TODO: update your GitHub secrets to include TCLOUD_TOKEN, GOOGLE_SQLMESH_CREDENTIALS
-          TCLOUD_TOKEN: ${{ secrets.TCLOUD_TOKEN }}
+        env: # TODO: update your GitHub secrets to include TCLOUD_CLIENT_ID, TCLOUD_CLIENT_SECRET, TCLOUD_URL, TCLOUD_GATEWAY, others are optional
+          TCLOUD_CLIENT_ID: ${{ secrets.TCLOUD_CLIENT_ID }}
+          TCLOUD_CLIENT_SECRET: ${{ secrets.TCLOUD_CLIENT_SECRET }}
+          TCLOUD_URL: https://cloud.tobikodata.com/sqlmesh/tobiko/public-demo/
+          TCLOUD_GATEWAY: public-demo
+          TCLOUD_EXTRAS: bigquery,github,postgres
           GOOGLE_SQLMESH_CREDENTIALS: ${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}
