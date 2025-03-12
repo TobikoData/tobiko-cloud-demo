@@ -26,7 +26,14 @@ project: repo_a
 model_defaults:
     dialect: bigquery
     start: 2024-12-01
-    validate_query: true
+
+
+linter:
+    enabled: true
+    # error if ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"] rules violated
+    rules: ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"]
+    # warn_rules: ["noselectstar"]
+    # ignored_rules: ["noselectstar"]
 
 # enables synchronized deployments to prod when a PR is merged
 cicd_bot:
