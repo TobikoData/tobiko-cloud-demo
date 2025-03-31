@@ -22,6 +22,7 @@ gateways:
 default_gateway: public-demo
 project: repo_a
 
+environment_ttl: "1 week"
 
 model_defaults:
     dialect: bigquery
@@ -32,7 +33,7 @@ linter:
     enabled: true
     # error if ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"] rules violated
     rules: ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"]
-    # warn_rules: ["noselectstar"]
+    warn_rules: ["noselectstar"]
     # ignored_rules: ["noselectstar"]
 
 # enables synchronized deployments to prod when a PR is merged
