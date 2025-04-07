@@ -3,7 +3,7 @@ gateways:
         scheduler: # TODO: add the connection info below into the Tobiko Cloud Connections Page with the service account json in plain text for this scheduler
             type: cloud
             # default_catalog: sqlmesh-public-demo
-        connection: # This connection is used for automatic unit test generation
+        connection: # This connection is used for automatic unit test generation and external model creation
             type: bigquery
             method: service-account-json
             concurrent_tasks: 5
@@ -22,6 +22,8 @@ gateways:
 default_gateway: public-demo
 project: repo_a
 
+pinned_environments: ["dev_cortland", "dev_reid", "dev_krushali"]
+environment_ttl: "1 week"
 
 model_defaults:
     dialect: bigquery
