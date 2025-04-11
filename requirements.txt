@@ -1,5 +1,5 @@
 tcloud
-tobiko-cloud-scheduler-facade[airflow,dagster]==1.0.2
+tobiko-cloud-scheduler-facade[airflow,dagster]==1.0.5
 pre-commit
 dagster
 dagster-webserver
