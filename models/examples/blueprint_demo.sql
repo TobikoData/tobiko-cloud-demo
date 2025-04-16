@@ -4,9 +4,9 @@ MODEL (
   cron '@daily',
   blueprints (
     (customer := customer1, paid_field := customer_persona, customer_filter := 1), /* each variable is a string */
-    (customer := customer2, paid_field := 'pay to see', customer_filter := 2),
+    (customer := customer2, paid_field := customer_persona, customer_filter := 2),
     (customer := customer3, paid_field := customer_persona, customer_filter := 3),
-    (customer := customer4, paid_field := 'pay to see', customer_filter := 4),
+    (customer := customer4, paid_field := customer_persona, customer_filter := 4),
     (customer := customer5, paid_field := customer_persona, customer_filter := 5)
   ),
   audits (
