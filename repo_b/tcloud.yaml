@@ -1,6 +1,0 @@
-# projects:
-#     public-demo:
-#         url: https://cloud.tobikodata.com/sqlmesh/tobiko/public-demo/
-#         gateway: tobiko_cloud
-#         extras: bigquery,web,github,postgres
-# default_project: public-demo
