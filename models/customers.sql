@@ -2,11 +2,14 @@ MODEL (
   name tcloud_demo.customers,
   cron '@daily',
   grain customer_id,
-  audits (UNIQUE_VALUES(columns = (
-    customer_id
-  )), NOT_NULL(columns = (
-    customer_id
-  )))
+  audits (
+    UNIQUE_VALUES(columns = (
+      customer_id
+    )),
+    NOT_NULL(columns = (
+      customer_id
+    ))
+  )
 );
 
 WITH customers AS (
@@ -44,13 +47,13 @@ WITH customers AS (
     orders.customer_id
 ), final AS (
   SELECT
-    customers.customer_id,
-    customers.first_name,
-    customers.last_name,
-    customer_orders.first_order,
-    customer_orders.most_recent_order,
-    customer_orders.number_of_orders,
-    customer_payments.total_amount AS customer_lifetime_value
+    customers.customer_id, /* these inline comments cascade to the data catalog automatically */ /* This is a unique identifier for a customer */
+    customers.first_name, /* Customer's first name. PII. */
+    customers.last_name, /* Customer's last name. PII. */
+    customer_orders.first_order, /* Date (UTC) of a customer's first order */
+    customer_orders.most_recent_order, /* Date (UTC) of a customer's most recent order */
+    customer_orders.number_of_orders, /* Count of the number of orders a customer has placed */
+    customer_payments.total_amount AS customer_lifetime_value /* Total value (AUD) of a customer's orders */
   FROM customers
   LEFT JOIN customer_orders
     ON customers.customer_id = customer_orders.customer_id
@@ -60,8 +63,3 @@ WITH customers AS (
 SELECT
   *
 FROM final
-
--- create a unit test from this SQL model
--- sqlmesh create_test tcloud_demo.customers --query tcloud_demo.stg_customers "select * from tcloud_demo.stg_customers limit 5" \
--- --query tcloud_demo.stg_orders "select * from tcloud_demo.stg_orders limit 5" \
--- --query tcloud_demo.stg_payments "select * from tcloud_demo.stg_payments limit 5"

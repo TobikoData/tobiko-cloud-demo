@@ -7,9 +7,9 @@ on:
     - synchronize
     - opened
   # Required if using comments to issue commands to the bot
-  # issue_comment:
-  #   types:
-  #   - created
+  issue_comment:
+    types:
+    - created
   # Required if using required approvers to automate deployments
   pull_request_review:
     types:
@@ -45,20 +45,18 @@ jobs:
         with:
           ref: refs/pull/${{ github.event.issue.pull_request && github.event.issue.number || github.event.pull_request.number  }}/merge
 
-      - name: Authenticate to Google Cloud
-        uses: 'google-github-actions/auth@v2'
-        with:
-          credentials_json: '${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}'
-
       - name: Install tcloud CLI + Dependencies
         run: |
-          pip install poetry
-          poetry install --no-root
+          pip install tcloud==2.9.3
         shell: bash
 
-      - name: Run tcloud CI/CD Bot
+      - name: Run tcloud CI/CD Bot 
         run: |
-          poetry run tcloud sqlmesh_cicd -p ${{ github.workspace }} github --token ${{ secrets.GITHUB_TOKEN }} run-all
-        env: # TODO: update your GitHub secrets to include TCLOUD_TOKEN, GOOGLE_SQLMESH_CREDENTIALS
-          TCLOUD_TOKEN: ${{ secrets.TCLOUD_TOKEN }}
+          tcloud sqlmesh_cicd -p ${{ github.workspace }} github --token ${{ secrets.GITHUB_TOKEN }} run-all
+        env: # TODO: update your GitHub secrets to include TCLOUD_CLIENT_ID, TCLOUD_CLIENT_SECRET, TCLOUD_URL, TCLOUD_GATEWAY, others are optional
+          TCLOUD_CLIENT_ID: ${{ secrets.TCLOUD_CLIENT_ID }}
+          TCLOUD_CLIENT_SECRET: ${{ secrets.TCLOUD_CLIENT_SECRET }}
+          TCLOUD_URL: https://cloud.tobikodata.com/sqlmesh/tobiko/public-demo/
+          TCLOUD_GATEWAY: public-demo
+          TCLOUD_EXTRAS: bigquery,github,postgres
           GOOGLE_SQLMESH_CREDENTIALS: ${{ secrets.GOOGLE_SQLMESH_CREDENTIALS }}

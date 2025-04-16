@@ -31,7 +31,12 @@ What you'll be using:
 ```bash
 git clone https://github.com/TobikoData/tobiko-cloud-demo.git # clone the repo
 cd tobiko-cloud-demo # go to the root directory
-make dev-install # virtual environment setup
+uv python install 3.12 # install python 3.12, only run once
+
+uv venv --python 3.12 --seed  # create a virtual environment inside the project directory
+source .venv/bin/activate # activate the virtual environment
+uv pip install -r requirements.txt # install the tcloud CLI
+which tcloud # verify the tcloud CLI is installed in the venv in the path above
 ```
 
 **Setup your BigQuery Service Account:**
@@ -48,28 +53,31 @@ make dev-install # virtual environment setup
 
 **Setup your Tobiko Cloud State Connection:**
 
-1. Work with Tobiko to get your Tobiko Cloud Token and account url
+1. Work with Tobiko to get your Tobiko Cloud auth setup
 
 ```bash
-# examples based on the image above
-export TOBIKO_CLOUD_TOKEN=<TOBIKO_CLOUD_TOKEN>
+tcloud auth login
+# Current Tobiko Cloud SSO session expires in 229 minutes
+# User Token
+# Email: sung@tobikodata.com
+# Name: Sung Won Chung
+# Scope: tbk:scope:project:*:*:admin
 ```
 
 ```yaml
 # config.yaml gateway example
 gateways:
-    tobiko_cloud:
-        connection:
+    public-demo: # this will use the config in tcloud.yaml for state_connection
+        scheduler: # TODO: add the connection info below into the Tobiko Cloud Connections Page with the service account json in plain text for this scheduler
+            type: cloud
+            default_catalog: sqlmesh-public-demo
+        connection: # This connection is used for automatic unit test generation and external model creation
             type: bigquery
             method: service-account-json
             concurrent_tasks: 5
             register_comments: true
             keyfile_json: {{ env_var('GOOGLE_SQLMESH_CREDENTIALS') }}
-            project: sqlmesh-public-demo # TODO: update this
-        state_connection:
-            type: cloud
-            url: https://sqlmesh-prod-enterprise-public-demo-sefz6ezt4q-uc.a.run.app # TODO: replace this url with your own
-            token: "{{ env_var('TOBIKO_CLOUD_TOKEN') }}"
+            project: sqlmesh-public-demo
 ```
 
 **Verify SQLMesh can connect to BigQuery and Tobiko Cloud:**
@@ -115,7 +123,7 @@ python demo_scripts/main.py rename-column --old event_name --new named_events
 #   user_id: STRING
 
 # run sqlmesh for the incremental_events.sql model
-sqlmesh run --ignore-cron
+tcloud sqlmesh run --ignore-cron
 
 # expected output
 # google.api_core.exceptions.BadRequest: 400 GET https://bigquery.googleapis.com/bigquery/v2/projects/sqlmesh-public-demo/queries/0af1142b-cf71-4dc2-aa56-f60b09af777b?maxResults=0&location=US&prettyPrint=false: Unrecognized name: event_name; Did you mean event_id? at
@@ -147,7 +155,7 @@ python demo_scripts/main.py rename-column
 #   user_id: STRING
 
 # rerun sqlmesh for the incremental_events.sql model
-sqlmesh run --ignore-cron
+tcloud sqlmesh run --ignore-cron
 
 # expected output
 # [1/1] tcloud_demo.incremental_events_allow_partials evaluated in 7.76s
