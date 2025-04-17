@@ -1,17 +1,13 @@
-import os
-from tobikodata.sqlmesh_enterprise.config.scheduler import CloudSchedulerConfig
-from sqlmesh.core.config import (
-    Config,
-    ModelDefaultsConfig,
-    GatewayConfig,
-)
+from sqlmesh.core.config import GatewayConfig, ModelDefaultsConfig
 
-config = Config(
+from tobikodata.sqlmesh_enterprise.config import EnterpriseConfig, RemoteCloudSchedulerConfig
+
+config = EnterpriseConfig(
+    default_gateway="tobiko_cloud", # name in tcloud ui connections page
     model_defaults=ModelDefaultsConfig(dialect="bigquery"),
-    default_gateway="tobiko_cloud",
     gateways={
         "tobiko_cloud": GatewayConfig(
-            scheduler = CloudSchedulerConfig(),
-        )
-    }
+            scheduler=RemoteCloudSchedulerConfig()
+        ),
+    },
 )
