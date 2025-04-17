@@ -3,9 +3,9 @@ MODEL (
   cron '@daily',
   grains payment_id,
   audits (UNIQUE_VALUES(columns = (
-      person_id
+      payment_id
     )), NOT_NULL(columns = (
-      person_id
+      payment_id
   )))
 );
 
