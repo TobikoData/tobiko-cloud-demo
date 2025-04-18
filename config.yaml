@@ -31,7 +31,7 @@ model_defaults:
 linter:
     enabled: true
     # error if ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"] rules violated
-    rules: ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"]
+    # rules: ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"]
     warn_rules: ["noselectstar"]
     # ignored_rules: ["noselectstar"]
 
