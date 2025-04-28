@@ -2,7 +2,7 @@ projects:
   prod:
     url: https://cloud.tobikodata.com/sqlmesh/customer_name/project_name/
     gateway: tobiko_cloud
-    extras: bigquery,web,github
+    extras: bigquery,web,github # update for your warehouse
     pip_executable: uv pip
 default_project: prod
 # you can alias the tcloud cli in your shell: alias sqlmesh='tcloud sqlmesh'
