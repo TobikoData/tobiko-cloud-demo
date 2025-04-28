@@ -8,7 +8,7 @@ gateways:
       method: service-account-json
       concurrent_tasks: 5
       register_comments: true
-      keyfile_json: {{ env_var('GOOGLE_SQLMESH_CREDENTIALS') }} # export GOOGLE_SQLMESH_CREDENTIALS=<contents of the service account json file>
+      keyfile_json: {{ env_var('GOOGLE_SQLMESH_CREDENTIALS') }} # export GOOGLE_SQLMESH_CREDENTIALS=<contents of the service account json file as a single line in plain text>
       project: sqlmesh-public-demo
 
 default_gateway: tobiko_cloud
