@@ -1,8 +1,8 @@
 projects:
-    public-demo:
-        url: https://cloud.tobikodata.com/sqlmesh/tobiko/public-demo/
-        gateway: public-demo
-        extras: bigquery,web,github,postgres
-        pip_executable: uv pip
+  public-demo:
+    url: https://cloud.tobikodata.com/sqlmesh/tobiko/public-demo/
+    gateway: public-demo
+    extras: bigquery,web,github,postgres
+    pip_executable: uv pip
 default_project: public-demo
 # you can alias the tcloud cli in your shell: alias sqlmesh='tcloud sqlmesh'

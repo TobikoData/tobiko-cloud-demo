@@ -1,51 +1,51 @@
 gateways:
-    public-demo: # this will use the config in tcloud.yaml for state_connection
-        scheduler: # TODO: add the connection info below into the Tobiko Cloud Connections Page with the service account json in plain text for this scheduler
-            type: cloud
-            default_catalog: sqlmesh-public-demo
-        connection: # This connection is used for automatic unit test generation and external model creation
-            type: bigquery
-            method: service-account-json
-            concurrent_tasks: 5
-            register_comments: true
-            keyfile_json: {{ env_var('GOOGLE_SQLMESH_CREDENTIALS') }}
-            project: sqlmesh-public-demo
-    postgres:
-        connection:
-            type: postgres
-            host: {{ env_var('SQLMESH_STATE_HOST') }}
-            port: 5432
-            user: {{ env_var('SQLMESH_STATE_USERNAME') }}
-            password: {{ env_var('SQLMESH_STATE_PASSWORD') }}
-            database: sqlmesh_state_demo
+  public-demo: # this will use the config in tcloud.yaml for state_connection
+    scheduler: # TODO: add the connection info below into the Tobiko Cloud Connections Page with the service account json in plain text for this scheduler
+      type: cloud
+      default_catalog: sqlmesh-public-demo
+    connection: # This connection is used for automatic unit test generation and external model creation
+      type: bigquery
+      method: service-account-json
+      concurrent_tasks: 5
+      register_comments: true
+      keyfile_json: {{ env_var('GOOGLE_SQLMESH_CREDENTIALS') }}
+      project: sqlmesh-public-demo
+  postgres:
+    connection:
+      type: postgres
+      host: {{ env_var('SQLMESH_STATE_HOST') }}
+      port: 5432
+      user: {{ env_var('SQLMESH_STATE_USERNAME') }}
+      password: {{ env_var('SQLMESH_STATE_PASSWORD') }}
+      database: sqlmesh_state_demo
 
 default_gateway: public-demo
 project: repo_a
 
 model_defaults:
-    dialect: bigquery
-    start: 2024-12-01
+  dialect: bigquery
+  start: 2024-12-01
 
 
 linter:
-    enabled: true
-    # error if ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"] rules violated
-    rules: ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"]
-    # warn_rules: ["noselectstar"]
-    # ignored_rules: ["noselectstar"]
+  enabled: true
+  # error if ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"] rules violated
+  rules: ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"]
+  # warn_rules: ["noselectstar"]
+  # ignored_rules: ["noselectstar"]
 
 
 # enables synchronized deployments to prod when a PR is merged
 cicd_bot:
-    type: github
-    merge_method: squash
-    enable_deploy_command: true
-    skip_pr_backfill: false
-    auto_categorize_changes:
-      external: full
-      python: full
-      sql: full
-      seed: full
+  type: github
+  merge_method: squash
+  enable_deploy_command: true
+  skip_pr_backfill: false
+  auto_categorize_changes:
+    external: full
+    python: full
+    sql: full
+    seed: full
 
 plan:
   enable_preview: true
