@@ -31,29 +31,3 @@ SELECT
 FROM sqlmesh-public-demo.tcloud_raw_data.raw_events
 WHERE
   event_timestamp BETWEEN @start_ds AND @end_ds;
-
-@measure(
-  SELECT
-    event_timestamp::DATE AS ts, /* Custom measure time column `ts` */
-    COUNT(*) AS daily_row_count, /* Daily row count */
-    COUNT(DISTINCT event_name) AS unique_event_name_count /* Count unique event_name values */
-  FROM tcloud_demo.incremental_events
-  WHERE
-    event_timestamp BETWEEN @start_ds AND @end_ds
-  GROUP BY
-    event_timestamp /* Group measure by time */
-) /* track observer metrics with plain SQL */;
-
-/* you can use macros to dynamically track  metrics you care about */
-@DEF(event_names, ['page_view', 'product_view', 'ad_view', 'video_view', 'blog_view']);
-
-@measure(
-  SELECT
-    event_timestamp::DATE AS ts,
-    @EACH(@event_names, x -> COUNT(CASE WHEN event_name = x THEN 1 END) AS @{x}_count)
-  FROM tcloud_demo.incremental_events
-  WHERE
-    event_timestamp::DATE BETWEEN @start_ds AND @end_ds
-  GROUP BY
-    event_timestamp::DATE
-)
