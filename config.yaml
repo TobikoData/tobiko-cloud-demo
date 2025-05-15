@@ -25,7 +25,9 @@ project: repo_a
 model_defaults:
   dialect: bigquery
   start: 2024-12-01
+  cron: '@daily'
 
+# allow_prod_deploy: {{ env_var('ALLOW_PROD_DEPLOY', 'false') }}
 
 linter:
   enabled: true
@@ -39,7 +41,7 @@ linter:
 cicd_bot:
   type: github
   merge_method: squash
-  enable_deploy_command: true
+  enable_deploy_command: false
   skip_pr_backfill: false
   auto_categorize_changes:
     external: full
@@ -60,3 +62,6 @@ users:
   github_username: afzaljasani
   roles:
     - required_approver
+
+variables:
+  schema_var: 'random_test'
