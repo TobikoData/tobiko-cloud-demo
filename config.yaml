@@ -19,13 +19,15 @@ gateways:
       password: {{ env_var('SQLMESH_STATE_PASSWORD') }}
       database: sqlmesh_state_demo
 
+default_target_environment: dev_{{ env_var('USER','sung') }}
+
 default_gateway: public-demo
 project: repo_a
 
 model_defaults:
   dialect: bigquery
   start: 2024-12-01
-  cron: '@daily'
+  cron: '@hourly'
 
 # allow_prod_deploy: {{ env_var('ALLOW_PROD_DEPLOY', 'false') }}
 
@@ -51,6 +53,10 @@ cicd_bot:
 
 plan:
   enable_preview: true
+  # no_diff: true
+  # use_finalized_state: true
+  # no_prompts: true
+  # auto_apply: true
 
 # list of users that are allowed to approve PRs for synchronized deployments
 users:
@@ -62,6 +68,3 @@ users:
   github_username: afzaljasani
   roles:
     - required_approver
-
-variables:
-  schema_var: 'random_test'
