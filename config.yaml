@@ -27,7 +27,7 @@ project: repo_a
 model_defaults:
   dialect: bigquery
   start: 2024-12-01
-  cron: '@hourly'
+  # cron: '@hourly'
 
 # allow_prod_deploy: {{ env_var('ALLOW_PROD_DEPLOY', 'false') }}
 
