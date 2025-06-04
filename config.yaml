@@ -32,7 +32,7 @@ linter:
     # error if ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"] rules violated
     rules: ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"]
     # warn_rules: ["noselectstar"]
-    # ignored_rules: ["noselectstar"]
+    # ignored_rules: ["noselectstar", "nomissingaudits"]
 
 
 # enables synchronized deployments to prod when a PR is merged
