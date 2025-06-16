@@ -9,6 +9,7 @@ MODEL (
     (customer := customer4, paid_field := customer_persona, customer_filter := 4),
     (customer := customer5, paid_field := customer_persona, customer_filter := 5)
   ),
+  grain (customer_id, order_id),
   audits (
     unique_combination_of_columns(columns := (customer_id, order_id)),
     NOT_NULL(columns := (customer_id, order_id))
