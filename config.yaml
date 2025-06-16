@@ -3,21 +3,20 @@ gateways:
         scheduler: # TODO: add the connection info below into the Tobiko Cloud Connections Page with the service account json in plain text for this scheduler
             type: cloud
             default_catalog: sqlmesh-public-demo
-        connection: # This connection is used for automatic unit test generation and external model creation
-            type: bigquery
-            method: service-account-json
-            concurrent_tasks: 5
-            register_comments: true
-            keyfile_json: {{ env_var('GOOGLE_SQLMESH_CREDENTIALS') }}
-            project: sqlmesh-public-demo
-    postgres:
-        connection:
-            type: postgres
-            host: {{ env_var('SQLMESH_STATE_HOST') }}
-            port: 5432
-            user: {{ env_var('SQLMESH_STATE_USERNAME') }}
-            password: {{ env_var('SQLMESH_STATE_PASSWORD') }}
-            database: sqlmesh_state_demo
+        state_connection:
+            type: cloud
+            url: https://cloud.tobikodata.com/sqlmesh/tobiko/public-demo/
+        # connection: # This connection is used for automatic unit test generation and external model creation
+        #     type: bigquery
+        #     project: sqlmesh-public-demo
+    # postgres:
+    #     connection:
+    #         type: postgres
+    #         host: {{ env_var('SQLMESH_STATE_HOST') }}
+    #         port: 5432
+    #         user: {{ env_var('SQLMESH_STATE_USERNAME') }}
+    #         password: {{ env_var('SQLMESH_STATE_PASSWORD') }}
+    #         database: sqlmesh_state_demo
 
 default_gateway: public-demo
 project: repo_a
