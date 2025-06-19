@@ -5,10 +5,6 @@ gateways:
             default_catalog: sqlmesh-public-demo
         connection: # This connection is used for automatic unit test generation and external model creation
             type: bigquery
-            method: service-account-json
-            concurrent_tasks: 5
-            register_comments: true
-            keyfile_json: {{ env_var('GOOGLE_SQLMESH_CREDENTIALS') }}
             project: sqlmesh-public-demo
     postgres:
         connection:
