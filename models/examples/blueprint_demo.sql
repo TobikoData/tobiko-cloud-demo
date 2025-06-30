@@ -24,6 +24,6 @@ SELECT
   purchase_date,
   country,
   @{paid_field} AS customer_persona /* use `@{variable}` syntax to make sqlmesh interpret the variable as a column */
-FROM demo.seed_ecommerce
+FROM tcloud_demo.seed_ecommerce
 WHERE
   customer_id = @customer_filter::INT64 /* we do `WHERE @condition` vs. `FROM @condition` to repsect the AST */

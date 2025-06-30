@@ -14,8 +14,6 @@ SELECT
   order_id,
   payment_method,
   'advanced_cll_column' AS advanced_cll_column,
-  amount / 100 AS amount, /* `amount` is currently stored in cents, so we convert it to dollars */
+  amount / 50 AS amount, /* `amount` is currently stored in cents, so we convert it to dollars */
   '3' AS new_column_demos /* non-breaking change example  */
 FROM tcloud_demo.seed_raw_payments
-
---tcloud sqlmesh table_diff prod:afzal_demo -m '*' --show-sample

@@ -1,5 +1,5 @@
 MODEL (
-  name demo.seed_ecommerce,
+  name tcloud_demo.seed_ecommerce,
   kind SEED (
     path '../seeds/ecommerce.csv'
   ),
