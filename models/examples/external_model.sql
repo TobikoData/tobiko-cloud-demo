@@ -2,7 +2,6 @@ MODEL (
   name tcloud_demo.external_model
 );
 
-/* run this to create the schema file from the table's metadata: sqlmesh create_external_models */
 SELECT
   event_date,
   event_timestamp,

@@ -1,4 +1,7 @@
 - name: '`bigquery-public-data`.`ga4_obfuscated_sample_ecommerce`.`events_20210131`'
+  audits:
+    - name: not_null
+      columns: "[event_date]"
   columns:
     event_date: STRING
     event_timestamp: INT64

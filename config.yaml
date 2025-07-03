@@ -1,56 +1,71 @@
 gateways:
-    public-demo: # this will use the config in tcloud.yaml for state_connection
-        scheduler: # TODO: add the connection info below into the Tobiko Cloud Connections Page with the service account json in plain text for this scheduler
-            type: cloud
-            default_catalog: sqlmesh-public-demo
-        connection: # This connection is used for automatic unit test generation and external model creation
-            type: bigquery
-            method: service-account-json
-            concurrent_tasks: 5
-            register_comments: true
-            keyfile_json: {{ env_var('GOOGLE_SQLMESH_CREDENTIALS') }}
-            project: sqlmesh-public-demo
-    postgres:
-        connection:
-            type: postgres
-            host: {{ env_var('SQLMESH_STATE_HOST') }}
-            port: 5432
-            user: {{ env_var('SQLMESH_STATE_USERNAME') }}
-            password: {{ env_var('SQLMESH_STATE_PASSWORD') }}
-            database: sqlmesh_state_demo
+  public-demo: # this will use the config in tcloud.yaml for state_connection
+    scheduler: # TODO: add the connection info below into the Tobiko Cloud Connections Page with the service account json in plain text for this scheduler
+      type: cloud
+      default_catalog: sqlmesh-public-demo
+    connection: # This connection is used for automatic unit test generation, external model creation, and table diffing
+      type: bigquery
+      method: service-account-json
+      concurrent_tasks: 5
+      register_comments: true
+      keyfile_json: {{ env_var('GOOGLE_SQLMESH_CREDENTIALS') }}
+      project: sqlmesh-public-demo
+  # postgres:
+  #   connection:
+  #     type: postgres
+  #     host: {{ env_var('SQLMESH_STATE_HOST') }}
+  #     port: 5432
+  #     user: {{ env_var('SQLMESH_STATE_USERNAME') }}
+  #     password: {{ env_var('SQLMESH_STATE_PASSWORD') }}
+  #     database: sqlmesh_state_demo
+
+# Uncomment this line to use the default target environment when running
+# tcloud sqlmesh plan
+# export USER=<your name>
+# it will resolve to: tcloud sqlmesh plan dev_USER
+# default_target_environment: dev_{{ env_var('USER','sung') }}
 
 default_gateway: public-demo
 project: repo_a
 
 model_defaults:
-    dialect: bigquery
-    start: 2024-12-01
+  dialect: bigquery
+  start: 2024-12-01
+  # cron: '@hourly'
 
+# Uncomment this line to prevent plans being applied to prod during development
+# allow_prod_deploy: {{ env_var('ALLOW_PROD_DEPLOY', 'false') }}
 
+# Linting rules to enforce standards for your team
 linter:
-    enabled: true
-    # error if ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"] rules violated
-    rules: ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"]
-    # warn_rules: ["noselectstar"]
-    # ignored_rules: ["noselectstar"]
-
+  enabled: true
+  # error if ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"] rules violated
+  rules: ["ambiguousorinvalidcolumn", "invalidselectstarexpansion"]
+  # warn_rules: ["noselectstar"]
+  # ignored_rules: ["noselectstar"]
 
 # enables synchronized deployments to prod when a PR is merged
 cicd_bot:
-    type: github
-    merge_method: squash
-    enable_deploy_command: true
-    skip_pr_backfill: false
-    auto_categorize_changes:
-      external: full
-      python: full
-      sql: full
-      seed: full
+  type: github
+  merge_method: squash
+  enable_deploy_command: false
+  skip_pr_backfill: false
+  auto_categorize_changes:
+    external: full
+    python: full
+    sql: full
+    seed: full
 
+# Uncomment the following lines to enable auto mode for faster development
 plan:
   enable_preview: true
+  # no_diff: true
+  # use_finalized_state: true
+  # no_prompts: true
+  # auto_apply: true
 
 # list of users that are allowed to approve PRs for synchronized deployments
+# When a user clicks "approve" on a PR, the PR will be automatically deployed to the target environment and merged into the main branch
 users:
 - username: sung_sqlmesh_demo
   github_username: sungchun12
