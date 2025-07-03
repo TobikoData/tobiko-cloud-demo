@@ -16,6 +16,7 @@ default_gateway: tobiko_cloud
 model_defaults:
   dialect: redshift
   start: 2024-12-01
+  cron: '@daily'
 
 linter:
   enabled: true
@@ -35,7 +36,3 @@ cicd_bot:
     python: full
     sql: full
     seed: full
-
-plan:
-  enable_preview: true
-
