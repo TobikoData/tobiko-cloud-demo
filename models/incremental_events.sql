@@ -30,4 +30,4 @@ SELECT
   IF(event_name = 'blog_view', 'high', 'low') AS user_intent_level
 FROM sqlmesh-public-demo.tcloud_raw_data.raw_events
 WHERE
-  event_timestamp BETWEEN @start_ds AND @end_ds;
+  event_timestamp BETWEEN @start_ds AND @end_ds
